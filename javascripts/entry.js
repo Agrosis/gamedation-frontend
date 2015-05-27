@@ -1,7 +1,10 @@
 require('../less/main.less');
 
 var React = require('react');
+var Router = require('react-router');
 
-var App = require('./components/App');
+var Routes = require('./Routes');
 
-React.render(<App/>, document.getElementById('content'));
+Router.run(Routes, Router.HistoryLocation, function(Handler){
+  React.render(<Handler/>, document.getElementById('content'));
+});

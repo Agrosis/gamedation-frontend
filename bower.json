@@ -1,0 +1,8 @@
+{
+  "name": "gamedation",
+  "description": "",
+  "version": "1.0.0",
+  "dependencies": {
+    "pure": "~0.6.0"
+  }
+}
