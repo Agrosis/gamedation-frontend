@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "react": "^0.13.3",
+    "react-classset": "0.0.2",
     "react-router": "^0.13.3"
   }
 }
