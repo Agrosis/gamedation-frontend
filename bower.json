@@ -3,6 +3,7 @@
   "description": "",
   "version": "1.0.0",
   "dependencies": {
-    "pure": "~0.6.0"
+    "pure": "~0.6.0",
+    "components-font-awesome": "~4.3.0"
   }
 }
