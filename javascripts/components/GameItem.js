@@ -53,6 +53,15 @@ var GameItem = React.createClass({
           </If>
           <div className="game-item-description">{this.props.description}</div>
         </div>
+        <div className="game-item-right">
+          <span className="game-item-platform-mac"></span>
+          <span className="game-item-platform-windows"></span>
+          <span className="game-item-platform-linux"></span>
+
+          <div className="game-item-avatar">
+            <img src="https://secure.gravatar.com/avatar/802540db8043503a3c3ead05d51c0139?s=64"/>
+          </div>
+        </div>
       </div>
     );
   }

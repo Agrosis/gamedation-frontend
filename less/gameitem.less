@@ -3,7 +3,11 @@
   display: block;
   width: 100%;
 
-  margin: 12px 0;
+  margin: 8px 0;
+  padding: 7px;
+  border-radius: 2px;
+
+  cursor: pointer;
 }
 
 .game-item-info {
@@ -82,4 +86,71 @@
 
 .game-item-upvoted {
   border-bottom: 9px solid #2e9df7;
+}
+
+.game-item-right {
+  float: right;
+  text-align: right;
+}
+
+.game-item-platform {
+  font-family: FontAwesome;
+  font-size: 12px;
+  -webkit-font-smoothing: antialiased;
+  font-style: normal;
+  font-weight: 0;
+  color: rgba(120, 120, 120, 0.3);
+
+  margin-left: 3px;
+}
+
+.game-item-platform-linux {
+  .game-item-platform;
+}
+
+.game-item-platform-linux:before {
+  content: "\f17c";
+}
+
+.game-item-platform-mac {
+  .game-item-platform;
+}
+
+.game-item-platform-mac:before {
+  content: "\f179";
+}
+
+.game-item-platform-windows {
+  .game-item-platform;
+}
+
+.game-item-platform-windows:before {
+  content: "\f17a";
+}
+
+.game-item-avatar {
+  margin-top: 4px;
+  width: 20px;
+  height: 20px;
+  margin-left: 100px;
+}
+
+.game-item-avatar > img {
+  border-radius: 100%;
+  width: 20px;
+  height: 20px;
+}
+
+.game-item:hover {
+  background: rgba(200, 200, 200, 0.1);
+
+  .game-item-platform-linux {
+    color: #222;
+  }
+  .game-item-platform-windows {
+    color: #ff1493;
+  }
+  .game-item-platform-mac {
+    color: #999;
+  }
 }
