@@ -22,6 +22,32 @@ button {
   }
 }
 
+a {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  font-weight: 100;
+
+  border-radius: 2px;
+  border: 1px solid #ccc;
+  outline: none;
+
+  background: #fff;
+
+  cursor: pointer;
+
+  padding: 8px 14px;
+
+  &:hover {
+    background: #f1f1f1;
+  }
+  &:active {
+    transform: scale(0.95, 0.95);
+  }
+  &:link {
+    text-decoration: none;
+  }
+}
+
 .button-black {
   background: #444;
   color: #fff;
@@ -52,6 +78,49 @@ button {
   &:hover {
     border: 1px solid #1db95c;
     background: #1db95c;
+  }
+}
+
+.button-gamejolt {
+  background: #222;
+  color: #fff;
+  border: 1px solid #222;
+
+  &:hover {
+    border: 1px solid #0a0a0a;
+    background: #0a0a0a;
+  }
+
+  img {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.button-steam {
+  background: #111;
+  color: #fff;
+  border: 1px solid #111;
+
+  &:hover {
+    border: 1px solid #020202;
+    background: #020202;
+  }
+
+  img {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.button-icon {
+  position: relative;
+  padding-left: 32px;
+
+  img {
+    position: absolute;
+    top: 8px;
+    left: 10px;
   }
 }
 
