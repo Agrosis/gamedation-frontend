@@ -4,7 +4,7 @@
   width: 100%;
 }
 
-.game-comment + .game-comment {
+.game-comment + .game-comment:not(.game-comment-reply) {
   margin-top: 10px;
 }
 
@@ -41,4 +41,8 @@
 
   display: inline-block;
   padding-left: 12px;
+}
+
+.game-comment-reply {
+  padding-left: 60px;
 }

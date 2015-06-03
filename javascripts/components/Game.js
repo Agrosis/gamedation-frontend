@@ -143,6 +143,7 @@ var Game = React.createClass({
               <div className="game-section">
                 <div className="game-section-header">comments</div>
                 <Comment/>
+                <Comment reply={true}/>
                 <Comment/>
                 <Comment/>
 
