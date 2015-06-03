@@ -1,0 +1,235 @@
+
+.game-overlay {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+
+  width: 100%;
+  height: 100%;
+
+  z-index: 10;
+
+  animation: fade-in-overlay 0.1s linear;
+
+  background: rgba(40, 40, 40, 0.7);
+}
+
+@keyframes fade-in-overlay {
+  from {
+    background: rgba(40, 40, 40, 0.0);
+  }
+  to {
+    background: rgba(40, 40, 40, 0.7);
+  }
+}
+
+.game-container {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+
+  position: relative;
+}
+
+.game {
+  width: 100%;
+  max-height: 90%;
+  height: 90%;
+
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+}
+
+.game-content {
+  height: 100%;
+
+  background: #fff;
+  text-align: left;
+
+  max-width: 950px;
+  margin: 0 auto;
+
+  animation: move-game 0.25s ease-in-out;
+}
+
+@keyframes move-game {
+  from {
+    transform: translateY(800px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+div.game-info {
+  display: inline-block;
+  margin-left: 15px;
+}
+
+div.game-header {
+  background: #555;
+  padding: 16px 16px;
+}
+
+div.game-title {
+  font-family: ProximaNova-Regular, sans-serif;
+  font-size: 30px;
+
+  color: #fafafa;
+}
+
+div.game-description {
+  font-family: ProximaNova-Regular, sans-serif;
+  font-size: 18px;
+
+  color: #ddd;
+}
+
+div.game-all-info {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+
+div.game-vote {
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+
+  margin-top: 2px;
+  padding: 5px 8px;
+
+  height: 100%;
+  background: #414141;
+  border-radius: 3px;
+}
+
+.game-points {
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+
+  color: #fff;
+}
+
+.game-upvote {
+  width: 0; 
+  height: 0;
+
+  border-top: 0px;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 9px solid #fff;
+
+  font-size: 0;
+  line-height: 0;
+
+  margin: 0 auto;
+  margin-bottom: 2px;
+
+  cursor: pointer;
+}
+
+.game-upvote:hover {
+  border-bottom: 9px solid #2bde73;
+}
+
+.game-upvoted {
+  border-bottom: 9px solid #2bde73;
+}
+
+.game-section {
+  padding: 16px 16px;
+}
+
+.game-section:nth-child(even) {
+  background: #f8f8f8;
+}
+
+.game-section-header {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+
+  color: #777;
+}
+
+.game-platform {
+  font-family: "Ionicons";
+  font-size: 34px;
+  -webkit-font-smoothing: antialiased;
+  font-style: normal;
+  font-weight: 0;
+  color: rgba(120, 120, 120, 0.4);
+
+  display: inline-block;
+  margin-right: 12px;
+}
+
+.game-platform-linux {
+  .game-platform;
+}
+
+.game-platform-linux:before {
+  content: "\f2c5";
+}
+
+.game-platform-mac {
+  .game-platform;
+}
+
+.game-platform-mac:before {
+  content: "\f227";
+}
+
+.game-platform-windows {
+  .game-platform;
+}
+
+.game-platform-windows:before {
+  content: "\f247";
+}
+
+.game-platform-android {
+  .game-platform;
+}
+
+.game-platform-android:before {
+  content: "\f225";
+}
+
+.game-platform-browser {
+  .game-platform;
+}
+
+.game-platform-browser:before {
+  content: "\f4db";
+}
+
+.game-platform-ios {
+  .game-platform;
+}
+
+.game-platform-ios:before {
+  content: "\f1fa";
+}
+
+.game-upvoter {
+  margin-top: 4px;
+  width: 36px;
+  height: 36px;
+
+  display: inline-block;
+
+  margin-right: 8px;
+}
+
+.game-upvoter > img {
+  border-radius: 100%;
+  width: 36px;
+  height: 36px;
+}

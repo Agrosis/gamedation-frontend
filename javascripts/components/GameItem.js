@@ -31,6 +31,10 @@ var GameItem = React.createClass({
     }
   },
 
+  dontPropagate: function(e){
+    e.stopPropagation();
+  },
+
   render: function(){
     var voteClasses = classSet({
       'game-item-upvote': true,
@@ -38,8 +42,8 @@ var GameItem = React.createClass({
     });
 
     return (
-      <div className="game-item">
-        <div className="game-item-vote">
+      <div className="game-item" onClick={this.props.onClick}>
+        <div className="game-item-vote" onClick={this.dontPropagate}>
           <div className={voteClasses} onClick={this.vote}></div>
           <div className="game-item-points">{this.state.points}</div>
         </div>
@@ -57,6 +61,9 @@ var GameItem = React.createClass({
           <span className="game-item-platform-mac"></span>
           <span className="game-item-platform-windows"></span>
           <span className="game-item-platform-linux"></span>
+          <span className="game-item-platform-android"></span>
+          <span className="game-item-platform-ios"></span>
+          <span className="game-item-platform-browser"></span>
 
           <div className="game-item-avatar">
             <img src="https://secure.gravatar.com/avatar/802540db8043503a3c3ead05d51c0139?s=64"/>

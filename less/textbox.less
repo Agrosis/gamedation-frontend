@@ -1,0 +1,65 @@
+
+input[type="text"], input[type="password"] {
+  outline: 0;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+
+  padding: 6px 8px;
+  padding-right: 31px;
+
+  &:focus {
+    border: 1px solid #888;
+  }
+
+  width: 100%;
+}
+
+.textbox-container {
+  position: relative;
+}
+
+.textbox-container > span.textbox-status {
+  position: absolute;
+  right: 10px;
+  top: 0px;
+
+  font-family: "Ionicons";
+  font-size: 32px;
+  -webkit-font-smoothing: antialiased;
+  font-style: normal;
+  font-weight: 0;
+}
+
+span.textbox-status.textbox-status-success:before {
+  content: "\f3fd";
+  color: #34bf49;
+}
+
+span.textbox-status.textbox-status-error:before {
+  content: "\f404";
+  color: #f00000;
+}
+
+span.textbox-status.textbox-status-loading {
+  font-size: 16px !important;
+  top: 8px;
+  right: 10px;
+
+  transform-origin: 50% 50%;
+  width: 14px;
+  height: 16px;
+  animation: loading-spin 0.8s infinite linear;
+}
+
+span.textbox-status.textbox-status-loading:before {
+  content: "\f29c";
+  color: #0099e5;
+}
+
+@keyframes loading-spin {
+    0%   {-webkit-transform: rotate(0deg)}
+    100% {-webkit-transform: rotate(360deg)}
+}

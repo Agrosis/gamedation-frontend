@@ -61,7 +61,6 @@
   margin-top: 2px;
   padding: 5px 6px;
 
-  width: 20px;
   height: 100%;
   background: #f1f1f1;
   border-radius: 3px;
@@ -93,11 +92,11 @@
 }
 
 .game-item-upvote:hover {
-  border-bottom: 9px solid #2e9df7;
+  border-bottom: 9px solid #2bde73;
 }
 
 .game-item-upvoted {
-  border-bottom: 9px solid #2e9df7;
+  border-bottom: 9px solid #2bde73;
 }
 
 .game-item-right {
@@ -108,14 +107,14 @@
 }
 
 .game-item-platform {
-  font-family: FontAwesome;
-  font-size: 12px;
+  font-family: "Ionicons";
+  font-size: 15px;
   -webkit-font-smoothing: antialiased;
   font-style: normal;
   font-weight: 0;
   color: rgba(120, 120, 120, 0.3);
 
-  margin-left: 3px;
+  margin-left: 4px;
 }
 
 .game-item-platform-linux {
@@ -123,7 +122,7 @@
 }
 
 .game-item-platform-linux:before {
-  content: "\f17c";
+  content: "\f2c5";
 }
 
 .game-item-platform-mac {
@@ -131,7 +130,7 @@
 }
 
 .game-item-platform-mac:before {
-  content: "\f179";
+  content: "\f227";
 }
 
 .game-item-platform-windows {
@@ -139,7 +138,31 @@
 }
 
 .game-item-platform-windows:before {
-  content: "\f17a";
+  content: "\f247";
+}
+
+.game-item-platform-android {
+  .game-item-platform;
+}
+
+.game-item-platform-android:before {
+  content: "\f225";
+}
+
+.game-item-platform-browser {
+  .game-item-platform;
+}
+
+.game-item-platform-browser:before {
+  content: "\f4db";
+}
+
+.game-item-platform-ios {
+  .game-item-platform;
+}
+
+.game-item-platform-ios:before {
+  content: "\f1fa";
 }
 
 .game-item-avatar {
@@ -166,5 +189,14 @@
   }
   .game-item-platform-mac {
     color: #999;
+  }
+  .game-item-platform-ios {
+    color: #222;
+  }
+  .game-item-platform-android {
+    color: #a4c639;
+  }
+  .game-item-platform-browser {
+    color: #222;
   }
 }

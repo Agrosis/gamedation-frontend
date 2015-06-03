@@ -4,11 +4,13 @@ var React = require('react');
 var If = require('./helpers/If');
 
 var AddGame = require('./AddGame');
+var Login = require('./Login');
+var SignUp = require('./SignUp');
 
 var Header = React.createClass({
 
   getInitialState: function(){
-    return {adding: false};
+    return {adding: false, login: false, signup: false};
   },
 
   openAdd: function(){
@@ -17,6 +19,22 @@ var Header = React.createClass({
 
   closeAdd: function(){
     this.setState({adding: false});
+  },
+
+  openLogin: function(){
+    this.setState({login: true});
+  },
+
+  closeLogin: function(){
+    this.setState({login: false});
+  },
+
+  openSignUp: function(){
+    this.setState({signup: true});
+  },
+
+  closeSignUp: function(){
+    this.setState({signup: false});
   },
 
   render: function(){
@@ -30,11 +48,23 @@ var Header = React.createClass({
             Sign out
           </div>
           <div className="header-nav nav-right" onClick={this.openAdd}>
-            <span className="fa fa-plus"></span>
+            <span className="ionicons ion-plus"></span>
+          </div>
+          <div className="header-nav nav-right" onClick={this.openLogin}>
+            Log in
+          </div>
+          <div className="header-nav nav-right" onClick={this.openSignUp}>
+            Sign up
           </div>
         </div>
         <If test={this.state.adding}>
           <AddGame onClose={this.closeAdd}/>
+        </If>
+        <If test={this.state.login}>
+          <Login onClose={this.closeLogin}/>
+        </If>
+        <If test={this.state.signup}>
+          <SignUp onClose={this.closeSignUp}/>
         </If>
       </div>
     );

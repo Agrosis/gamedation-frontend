@@ -9,10 +9,13 @@ var RouteHandler = Router.RouteHandler;
 
 var App = require('./components/App');
 var Index = require('./components/Index');
+var Game = require('./components/Game')
 
 var Routes = (
   <Route path="/" handler={App}>
-    <DefaultRoute handler={Index}/>
+    <Route name="index" path="/" handler={Index} ignoreScrollBehavior>
+      <Route name="game" path="game/:name/:id" handler={Game}/>
+    </Route>
   </Route>
 );
 

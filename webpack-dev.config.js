@@ -5,8 +5,14 @@ module.exports = {
 
     output: {
         path: './public/built',
-        publicPath: '/built',
+        publicPath: '/built/',
         filename: 'bundle.js'
+    },
+
+    devServer: {
+        contentBase: "public",
+        publicPath: 'http://localhost:8080/built/',
+        historyApiFallback: true
     },
 
     module: {
