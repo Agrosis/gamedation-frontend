@@ -1,10 +1,26 @@
 require('../less/main.less');
 
+'use strict';
 var React = require('react');
 var Router = require('react-router');
 
 var Routes = require('./Routes');
 
-Router.run(Routes, Router.HistoryLocation, function(Handler){
+var app = require('./app');
+var dehydratedState = {};
+
+window.React = React;
+
+function RenderApp(dispatcher, Handler){
   React.render(<Handler/>, document.getElementById('content'));
+}
+
+app.rehydrate(dehydratedState);
+
+var dispatcher = app.dispatcher;
+window.dispatcher = dispatcher;
+
+var firstRender = true;
+Router.run(Routes, Router.HistoryLocation, function (Handler, state) {
+  RenderApp(dispatcher, Handler);
 });

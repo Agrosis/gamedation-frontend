@@ -4,7 +4,7 @@ var classSet = require('react-classset')
 
 var Textbox = React.createClass({
   propTypes: {
-    text: React.PropTypes.string,
+    value: React.PropTypes.string,
     placeholder: React.PropTypes.string,
     name: React.PropTypes.string,
     id: React.PropTypes.string,
@@ -29,7 +29,7 @@ var Textbox = React.createClass({
 
     return (
       <div className={containerClasses}>
-        <input type={this.props.type || "text"} name={this.props.name} id={this.props.idx} placeholder={this.props.placeholder} defaultText={this.props.text} className={classes}/>
+        <input value={this.props.value} onChange={this.props.onChange} type={this.props.type || "text"} name={this.props.name} id={this.props.idx} placeholder={this.props.placeholder} className={classes}/>
         <span className={statusClasses}></span>
       </div>
     );
