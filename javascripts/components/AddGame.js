@@ -43,7 +43,19 @@ var AddGame = React.createClass({
                 }
               });
             } else if(response.data.type == "steam") {
-              console.log("steam");
+              this.setState({
+                linkState: "success",
+                title: response.data.steamData.data.name,
+                windows: response.data.steamData.data.windows,
+                mac: response.data.steamData.data.mac,
+                linux: response.data.steamData.data.linux
+              });
+
+              this.onTitleChange({
+                target: {
+                  value: this.state.title
+                }
+              });
             }
           }
         }
