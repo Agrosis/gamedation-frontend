@@ -136,8 +136,35 @@ var Game = React.createClass({
                 </div>
               </div>
 
-              <div className="game-section">
+              <div className="game-section game-screenshots">
                 <div className="game-section-header">media</div>
+                <div className="game-screenshot">
+                  <img src="http://i.gjcdn.net/imgserver/screenshot-thumbnail/898x1000/116552.jpg"/>
+                </div>
+                <div className="game-screenshot">
+                  <img src="http://i.gjcdn.net/imgserver/screenshot-thumbnail/898x1000/116551.jpg"/>
+                </div>
+                <div className="game-screenshot">
+                  <img src="http://i.gjcdn.net/imgserver/screenshot-thumbnail/898x1000/116550.jpg"/>
+                </div>
+                <div className="game-screenshot">
+                  <img src="http://i.gjcdn.net/imgserver/screenshot-thumbnail/898x1000/116552.jpg"/>
+                </div>
+                <div className="game-screenshot">
+                  <img src="http://i.gjcdn.net/imgserver/screenshot-thumbnail/898x1000/116551.jpg"/>
+                </div>
+                <div className="game-screenshot">
+                  <img src="http://i.gjcdn.net/imgserver/screenshot-thumbnail/898x1000/116550.jpg"/>
+                </div>
+                <div className="game-screenshot">
+                  <img src="http://i.gjcdn.net/imgserver/screenshot-thumbnail/898x1000/116552.jpg"/>
+                </div>
+                <div className="game-screenshot">
+                  <img src="http://i.gjcdn.net/imgserver/screenshot-thumbnail/898x1000/116551.jpg"/>
+                </div>
+                <div className="game-screenshot">
+                  <img src="http://i.gjcdn.net/imgserver/screenshot-thumbnail/898x1000/116550.jpg"/>
+                </div>
               </div>
 
               <div className="game-section">

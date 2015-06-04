@@ -8,7 +8,23 @@ var processLink = require('../actions/processLink');
 var AddGame = React.createClass({
 
   getInitialState: function(){
-    return {linkState: "none", titleState: "none", descriptionState: "none", title: "", windows: false, android: false, iOS: false, mac: false, browser: false, linux: false};
+    return {
+      linkState: "none", 
+      titleState: "none", 
+      descriptionState: "none", 
+
+      title: "", 
+      windows: false, 
+      android: false, 
+      iOS: false, 
+      mac: false, 
+      browser: false, 
+      linux: false,
+
+      imageState: "none",
+      currentImage: "",
+      images: []
+    };
   },
 
   modalClick: function(e) {
@@ -34,7 +50,8 @@ var AddGame = React.createClass({
                 windows: response.data.gjData.data.windows,
                 mac: response.data.gjData.data.mac,
                 browser: response.data.gjData.data.browser,
-                linux: response.data.gjData.data.linux
+                linux: response.data.gjData.data.linux,
+                images: response.data.gjData.data.screenshots
               });
 
               this.onTitleChange({
@@ -48,14 +65,23 @@ var AddGame = React.createClass({
                 title: response.data.steamData.data.name,
                 windows: response.data.steamData.data.windows,
                 mac: response.data.steamData.data.mac,
-                linux: response.data.steamData.data.linux
+                linux: response.data.steamData.data.linux,
+                images: response.data.steamData.data.screenshots
               });
+
+              if(this.state.images.length > 6) {
+                this.setState({images: this.state.images.slice(0, 6)});
+              }
 
               this.onTitleChange({
                 target: {
                   value: this.state.title
                 }
               });
+            } else if(response.data.type == "other") {
+              this.setState({
+                linkState: "success"
+              })
             }
           }
         }
@@ -71,6 +97,15 @@ var AddGame = React.createClass({
       this.setState({titleState: "success", title: title});
     } else {
       this.setState({titleState: "none", title: title});
+    }
+  },
+
+  onDescriptionChange: function(e) {
+    var description = e.target.value;
+    if(description != "") {
+      this.setState({descriptionState: "success"});
+    } else {
+      this.setState({descriptionState: "none"});
     }
   },
 
@@ -103,7 +138,25 @@ var AddGame = React.createClass({
     this.setState({browser: !this.state.browser});
   },
 
+  onImageChange: function(e) {
+    this.setState({currentImage: e.target.value});
+  },
+
+  addImage: function() {
+    if(this.state.currentImage != "") {
+      this.setState({images: this.state.images.concat([this.state.currentImage]), currentImage: ""});
+    }
+  },
+
   render: function(){
+    var images = this.state.images.map((img, i) => {
+      return (
+        <div key={i} className="upload-screenshot">
+          <img src={img}/>
+        </div>
+      );
+    });
+
     return (
       <div className="modal-overlay" onClick={this.props.onClose}>
         <div className="modal-container">
@@ -112,24 +165,31 @@ var AddGame = React.createClass({
               <div className="modal-header">Submit a Game</div>
 
               <label className="pure-u-4-24">Game Link</label>
-              <Textbox onChange={this.onLinkChange} status={this.state.linkState} containerClasses="pure-u-20-24" placeholder="Paste game link here (e.g. GameJolt, Steam)"/>
+              <Textbox name="link" onChange={this.onLinkChange} status={this.state.linkState} containerClasses="pure-u-20-24" placeholder="Paste game link here (e.g. GameJolt, Steam)"/>
 
               <label className="pure-u-4-24">Title</label>
-              <Textbox onChange={this.onTitleChange} status={this.state.titleState} value={this.state.title} containerClasses="pure-u-20-24" placeholder="Enter game title"/>
+              <Textbox name="title" onChange={this.onTitleChange} status={this.state.titleState} value={this.state.title} containerClasses="pure-u-20-24" placeholder="Enter game title"/>
 
               <label className="pure-u-4-24">Description</label>
-              <Textbox status={this.state.descriptionState} containerClasses="pure-u-20-24" placeholder="Enter game description"/>
+              <Textbox name="description" onChange={this.onDescriptionChange} status={this.state.descriptionState} containerClasses="pure-u-20-24" placeholder="Enter game description"/>
 
               <label className="pure-u-4-24">Platforms</label>
-
               <div className="pure-u-20-24 modal-checkboxes">
-                <div className="modal-checkbox pure-u-5-24"><input onChange={this.windows} type="checkbox" checked={this.state.windows}/> Windows</div>
-                <div className="modal-checkbox pure-u-5-24"><input onChange={this.mac} type="checkbox" checked={this.state.mac}/> Mac</div>
-                <div className="modal-checkbox pure-u-5-24"><input onChange={this.linux} type="checkbox" checked={this.state.linux}/> Linux</div>
-                <div className="modal-checkbox pure-u-5-24"><input onChange={this.android} type="checkbox" checked={this.state.android}/> Android</div>
-                <div className="modal-checkbox pure-u-5-24"><input onChange={this.browser} type="checkbox" checked={this.state.browser}/> Browser</div>
-                <div className="modal-checkbox pure-u-5-24"><input onChange={this.iOS} type="checkbox" checked={this.state.ios}/> iOS</div>
+                <div className="modal-checkbox pure-u-5-24"><input name="windows" onChange={this.windows} type="checkbox" checked={this.state.windows}/> Windows</div>
+                <div className="modal-checkbox pure-u-5-24"><input name="mac" onChange={this.mac} type="checkbox" checked={this.state.mac}/> Mac</div>
+                <div className="modal-checkbox pure-u-5-24"><input name="linux" onChange={this.linux} type="checkbox" checked={this.state.linux}/> Linux</div>
+                <div className="modal-checkbox pure-u-5-24"><input name="android" onChange={this.android} type="checkbox" checked={this.state.android}/> Android</div>
+                <div className="modal-checkbox pure-u-5-24"><input name="browser" onChange={this.browser} type="checkbox" checked={this.state.browser}/> Browser</div>
+                <div className="modal-checkbox pure-u-5-24"><input name="iOS" onChange={this.iOS} type="checkbox" checked={this.state.iOS}/> iOS</div>
               </div>
+
+              <label className="pure-u-4-24">Images</label>
+              <div className="pure-u-20-24">
+                <Textbox value={this.state.currentImage} status={this.state.imageState} name="image" containerClasses="pure-u-20-24" onChange={this.onImageChange} placeholder="Enter an image link here..."/>
+                <button onClick={this.addImage} className="button-blue pure-u-4-24 button-sharp">Add</button>
+
+                {images}
+              </div> 
 
               <div className="modal-submit-button">
                 <button className="button-green button-full">Submit game</button>
