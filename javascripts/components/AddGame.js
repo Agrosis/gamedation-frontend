@@ -69,10 +69,6 @@ var AddGame = React.createClass({
                 images: response.data.steamData.data.screenshots
               });
 
-              if(this.state.images.length > 6) {
-                this.setState({images: this.state.images.slice(0, 6)});
-              }
-
               this.onTitleChange({
                 target: {
                   value: this.state.title
@@ -82,6 +78,10 @@ var AddGame = React.createClass({
               this.setState({
                 linkState: "success"
               })
+            }
+
+            if(this.state.images.length > 6) {
+              this.setState({images: this.state.images.slice(0, 6)});
             }
           }
         }
@@ -144,7 +144,19 @@ var AddGame = React.createClass({
 
   addImage: function() {
     if(this.state.currentImage != "") {
-      this.setState({images: this.state.images.concat([this.state.currentImage]), currentImage: ""});
+      this.setState({imageState: "success", images: this.state.images.concat([this.state.currentImage]), currentImage: ""});
+    }
+  },
+
+  failedImage: function(i){
+    return (e) => {
+      this.setState({imageState: "error", images: this.state.images.filter((f, n) => n != i)});
+    }
+  },
+
+  removeImage: function(i){
+    return (e) => {
+      this.setState({images: this.state.images.filter((f, n) => n != i)});
     }
   },
 
@@ -152,7 +164,8 @@ var AddGame = React.createClass({
     var images = this.state.images.map((img, i) => {
       return (
         <div key={i} className="upload-screenshot">
-          <img src={img}/>
+          <img src={img} onError={this.failedImage(i)}/>
+          <span className="remove-screenshot ionicons ion-close-round" onClick={this.removeImage(i)}></span>
         </div>
       );
     });
@@ -185,7 +198,7 @@ var AddGame = React.createClass({
 
               <label className="pure-u-4-24">Images</label>
               <div className="pure-u-20-24">
-                <Textbox value={this.state.currentImage} status={this.state.imageState} name="image" containerClasses="pure-u-20-24" onChange={this.onImageChange} placeholder="Enter an image link here..."/>
+                <Textbox value={this.state.currentImage} status={this.state.imageState} name="image" containerClasses="pure-u-20-24" onChange={this.onImageChange} placeholder="Enter an image link here... (6 max)"/>
                 <button onClick={this.addImage} className="button-blue pure-u-4-24 button-sharp">Add</button>
 
                 {images}

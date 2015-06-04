@@ -31,15 +31,33 @@ body {
 
 .upload-screenshot {
   height: 80px;
-  padding-right: 10px;
   margin: 5px 0;
+  margin-right: 10px;
 
   display: inline-block;
+  position: relative;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+    .remove-screenshot {
+      display: block;
+    }
+  }
 }
 
 .upload-screenshot > img {
   height: 80px;
   border-radius: 2px;
+}
+
+.upload-screenshot > .remove-screenshot {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+
+  color: #ff3322;
+  display: none;
 }
 
 * {
