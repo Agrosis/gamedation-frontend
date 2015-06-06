@@ -9,6 +9,7 @@ var RouteHandler = Router.RouteHandler;
 var If = require('./helpers/If');
 
 var upvoteGame = require('../actions/upvoteGame');
+var gameName = require('../actions/gameName');
 
 var GameItem = React.createClass({
   mixins: [Navigation, Router.State],
@@ -33,9 +34,9 @@ var GameItem = React.createClass({
 
   openGame: function(){
     if(this.isActive('index')) {
-      this.transitionTo('game', {name: this.props.name.toLowerCase(), gameId: this.props.id});
+      this.transitionTo('game', {name: gameName(this.props.name), gameId: this.props.id});
     } else if(this.isActive('submissions')) {
-      this.transitionTo('submission', {name: this.props.name.toLowerCase(), gameId: this.props.id});
+      this.transitionTo('submission', {name: gameName(this.props.name), gameId: this.props.id});
     }
   },
 

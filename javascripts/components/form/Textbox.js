@@ -29,7 +29,7 @@ var Textbox = React.createClass({
 
     return (
       <div className={containerClasses}>
-        <input value={this.props.value} onChange={this.props.onChange} type={this.props.type || "text"} name={this.props.name} id={this.props.idx} placeholder={this.props.placeholder} className={classes}/>
+        <input name={this.props.name} id={this.props.id} value={this.props.value} onChange={this.props.onChange} type={this.props.type || "text"} placeholder={this.props.placeholder} className={classes}/>
         <span className={statusClasses}></span>
       </div>
     );

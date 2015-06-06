@@ -14,6 +14,7 @@ var GamesStore = require('../stores/GamesStore');
 
 var getGame = require('../actions/getGame');
 var upvoteGame = require('../actions/upvoteGame');
+var gameName = require('../actions/gameName');
 
 var If = require('./helpers/If');
 var assign = require('object-assign');
@@ -65,11 +66,11 @@ var Game = React.createClass({
 
     if(e.keyCode === 37) {
       var p = window.dispatcher.getStore(GamesStore).getPreviousGame(this.state.game.id);
-      this.transitionTo(gamePath, {name: p.name.toLowerCase(), gameId: p.id});
+      this.transitionTo(gamePath, {name: gameName(p.name), gameId: p.id});
       getGame(p.id, dispatcher);
     } else if(e.keyCode === 39) {
       var n = window.dispatcher.getStore(GamesStore).getNextGame(this.state.game.id);
-      this.transitionTo(gamePath, {name: n.name.toLowerCase(), gameId: n.id});
+      this.transitionTo(gamePath, {name: gameName(n.name), gameId: n.id});
       getGame(n.id, dispatcher);
     }
   },
