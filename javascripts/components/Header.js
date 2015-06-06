@@ -1,5 +1,7 @@
 
 var React = require('react');
+var Router = require('react-router');
+var Link = Router.Link;
 
 var If = require('./helpers/If');
 
@@ -41,9 +43,12 @@ var Header = React.createClass({
     return (
       <div className="header">
         <div className="header-content">
-          <div className="header-nav">
+          <Link activeClassName="active-header-nav" to="index" className="header-nav">
             Home
-          </div>
+          </Link>
+          <Link activeClassName="active-header-nav" to="submissions" className="header-nav">
+            Submissions
+          </Link>
           <div className="header-nav nav-right">
             Sign out
           </div>

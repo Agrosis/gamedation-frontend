@@ -17,7 +17,7 @@ function RenderApp(dispatcher, Handler){
 
 app.rehydrate(dehydratedState);
 
-var dispatcher = app.dispatcher;
+var dispatcher = app;
 window.dispatcher = dispatcher;
 
 var firstRender = true;

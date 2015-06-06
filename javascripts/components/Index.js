@@ -1,82 +1,60 @@
 
 var React = require('react');
+var DocumentTitle = require('react-document-title');
+
+var getGames = require('../actions/getGames');
+
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
-var Navigation = Router.Navigation;
+
+var assign = require('object-assign');
 
 var GameItem = require('./GameItem');
 
-var Index = React.createClass({
-  mixins: [Navigation],
+var StoreListener = require('./mixins/StoreListener');
+var GamesStore = require('../stores/GamesStore');
 
-  openGame: function(){
-    this.transitionTo('game', {name: 'deathsiege', id: 10});
+var Index = React.createClass({
+  mixins: [StoreListener],
+
+  statics: {
+    storeListeners: [GamesStore]
+  },
+
+  getInitialState: function() {
+    return assign(window.dispatcher.getStore(GamesStore).getState());
+  },
+
+  onChange: function() {
+    this.setState(assign(window.dispatcher.getStore(GamesStore).getState()));
+  },
+
+  componentDidMount: function() {
+    getGames(window.dispatcher);
   },
 
   render: function() {
+    var games = this.state.games.map((g, i) => {
+      var gamejolt = g.site === "gamejolt";
+      var steam = g.site === "steam";
+
+      return (
+        <GameItem key={i} id={g.id} platforms={g.platforms} upvoted={g.upvoted} gamejolt={gamejolt} steam={steam} name={g.name} description={g.description} points={g.points}/>
+      );
+    });
+
     return (
       <div>
         <div className="middle-content">
           <div className="game-items">
             <div className="game-items-day">Today's games</div>
-            <GameItem onClick={this.openGame} upvoted={false} gamejolt={true} name="Deathsiege" description="A first-person wave-based siege game. Play this game if you dare!" points={32}/>
-            <GameItem upvoted={true} steam={true} name="Dead Run 2" description="Play complicated puzzles and beat monsters! A game designed for the veterans." points={27}/>
-            <GameItem upvoted={false} gamejolt={true} name="Deathsiege" description="A first-person wave-based siege game. Play this game if you dare!" points={32}/>
-            <GameItem upvoted={true} steam={true} name="Dead Run 2" description="Play complicated puzzles and beat monsters! A game designed for the veterans." points={27}/>
-
-            <GameItem upvoted={false} gamejolt={true} name="Deathsiege" description="A first-person wave-based siege game. Play this game if you dare!" points={32}/>
-            <GameItem upvoted={true} steam={true} name="Dead Run 2" description="Play complicated puzzles and beat monsters! A game designed for the veterans." points={27}/>
-
-            <GameItem upvoted={false} gamejolt={true} name="Deathsiege" description="A first-person wave-based siege game. Play this game if you dare!" points={32}/>
-            <GameItem upvoted={true} steam={true} name="Dead Run 2" description="Play complicated puzzles and beat monsters! A game designed for the veterans." points={27}/>
-
-            <GameItem upvoted={false} gamejolt={true} name="Deathsiege" description="A first-person wave-based siege game. Play this game if you dare!" points={32}/>
-            <GameItem upvoted={true} steam={true} name="Dead Run 2" description="Play complicated puzzles and beat monsters! A game designed for the veterans." points={27}/>
-
-            <GameItem upvoted={false} gamejolt={true} name="Deathsiege" description="A first-person wave-based siege game. Play this game if you dare!" points={32}/>
-            <GameItem upvoted={true} steam={true} name="Dead Run 2" description="Play complicated puzzles and beat monsters! A game designed for the veterans." points={27}/>
-          </div>
-          <div className="game-items">
-            <div className="game-items-day">Today's games</div>
-            <GameItem upvoted={false} gamejolt={true} name="Deathsiege" description="A first-person wave-based siege game. Play this game if you dare!" points={32}/>
-            <GameItem upvoted={true} steam={true} name="Dead Run 2" description="Play complicated puzzles and beat monsters! A game designed for the veterans." points={27}/>
-            <GameItem upvoted={false} gamejolt={true} name="Deathsiege" description="A first-person wave-based siege game. Play this game if you dare!" points={32}/>
-            <GameItem upvoted={true} steam={true} name="Dead Run 2" description="Play complicated puzzles and beat monsters! A game designed for the veterans." points={27}/>
-
-            <GameItem upvoted={false} gamejolt={true} name="Deathsiege" description="A first-person wave-based siege game. Play this game if you dare!" points={32}/>
-            <GameItem upvoted={true} steam={true} name="Dead Run 2" description="Play complicated puzzles and beat monsters! A game designed for the veterans." points={27}/>
-
-            <GameItem upvoted={false} gamejolt={true} name="Deathsiege" description="A first-person wave-based siege game. Play this game if you dare!" points={32}/>
-            <GameItem upvoted={true} steam={true} name="Dead Run 2" description="Play complicated puzzles and beat monsters! A game designed for the veterans." points={27}/>
-
-            <GameItem upvoted={false} gamejolt={true} name="Deathsiege" description="A first-person wave-based siege game. Play this game if you dare!" points={32}/>
-            <GameItem upvoted={true} steam={true} name="Dead Run 2" description="Play complicated puzzles and beat monsters! A game designed for the veterans." points={27}/>
-
-            <GameItem upvoted={false} gamejolt={true} name="Deathsiege" description="A first-person wave-based siege game. Play this game if you dare!" points={32}/>
-            <GameItem upvoted={true} steam={true} name="Dead Run 2" description="Play complicated puzzles and beat monsters! A game designed for the veterans." points={27}/>
-          </div>
-          <div className="game-items">
-            <div className="game-items-day">Today's games</div>
-            <GameItem upvoted={false} gamejolt={true} name="Deathsiege" description="A first-person wave-based siege game. Play this game if you dare!" points={32}/>
-            <GameItem upvoted={true} steam={true} name="Dead Run 2" description="Play complicated puzzles and beat monsters! A game designed for the veterans." points={27}/>
-            <GameItem upvoted={false} gamejolt={true} name="Deathsiege" description="A first-person wave-based siege game. Play this game if you dare!" points={32}/>
-            <GameItem upvoted={true} steam={true} name="Dead Run 2" description="Play complicated puzzles and beat monsters! A game designed for the veterans." points={27}/>
-
-            <GameItem upvoted={false} gamejolt={true} name="Deathsiege" description="A first-person wave-based siege game. Play this game if you dare!" points={32}/>
-            <GameItem upvoted={true} steam={true} name="Dead Run 2" description="Play complicated puzzles and beat monsters! A game designed for the veterans." points={27}/>
-
-            <GameItem upvoted={false} gamejolt={true} name="Deathsiege" description="A first-person wave-based siege game. Play this game if you dare!" points={32}/>
-            <GameItem upvoted={true} steam={true} name="Dead Run 2" description="Play complicated puzzles and beat monsters! A game designed for the veterans." points={27}/>
-
-            <GameItem upvoted={false} gamejolt={true} name="Deathsiege" description="A first-person wave-based siege game. Play this game if you dare!" points={32}/>
-            <GameItem upvoted={true} steam={true} name="Dead Run 2" description="Play complicated puzzles and beat monsters! A game designed for the veterans." points={27}/>
-
-            <GameItem upvoted={false} gamejolt={true} name="Deathsiege" description="A first-person wave-based siege game. Play this game if you dare!" points={32}/>
-            <GameItem upvoted={true} steam={true} name="Dead Run 2" description="Play complicated puzzles and beat monsters! A game designed for the veterans." points={27}/>
+            {games}
           </div>
         </div>
 
-        <RouteHandler/>
+        <DocumentTitle title='Gamedation'>
+          <RouteHandler/>
+        </DocumentTitle>
       </div>
     );
   }

@@ -1,8 +1,10 @@
-var CreateGameStore = require('./stores/CreateGameStore');
+var GameStore = require('./stores/GameStore');
+var GamesStore = require('./stores/GamesStore');
 
 var dispatcher = require('dispatchr').createDispatcher({
   stores: [
-    CreateGameStore
+    GameStore,
+    GamesStore
   ]
 });
 
