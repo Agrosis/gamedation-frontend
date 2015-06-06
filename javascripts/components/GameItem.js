@@ -11,7 +11,7 @@ var If = require('./helpers/If');
 var upvoteGame = require('../actions/upvoteGame');
 
 var GameItem = React.createClass({
-  mixins: [Navigation],
+  mixins: [Navigation, Router.State],
 
   propTypes: {
     name: React.PropTypes.string.isRequired,
@@ -32,7 +32,11 @@ var GameItem = React.createClass({
   },
 
   openGame: function(){
-    this.transitionTo('game', {name: this.props.name.toLowerCase(), gameId: this.props.id});
+    if(this.isActive('index')) {
+      this.transitionTo('game', {name: this.props.name.toLowerCase(), gameId: this.props.id});
+    } else if(this.isActive('submissions')) {
+      this.transitionTo('submission', {name: this.props.name.toLowerCase(), gameId: this.props.id});
+    }
   },
 
   render: function(){

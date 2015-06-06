@@ -22,6 +22,26 @@ var GamesStore = createStore({
     this.games = state.games;
   },
 
+  getNextGame: function(gameId) {
+    var i = this.games.indexOf(this.games.filter(g => g.id === gameId)[0]);
+
+    if(i == this.games.length - 1) {
+      return this.games[i];
+    } else if(i != -1) {
+      return this.games[i + 1];
+    }
+  },
+
+  getPreviousGame: function(gameId) {
+    var i = this.games.indexOf(this.games.filter(g => g.id === gameId)[0]);
+
+    if(i == 0) {
+      return this.games[i];
+    } else if(i != -1) {
+      return this.games[i - 1];
+    }
+  },
+
   handlers: {
     'get-games': function(payload) {
       this.games = payload.data.games;

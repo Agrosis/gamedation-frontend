@@ -10,6 +10,7 @@ var Comment = require('./Comment');
 
 var StoreListener = require('./mixins/StoreListener');
 var GameStore = require('../stores/GameStore');
+var GamesStore = require('../stores/GamesStore');
 
 var getGame = require('../actions/getGame');
 var upvoteGame = require('../actions/upvoteGame');
@@ -42,6 +43,8 @@ var Game = React.createClass({
 
   componentDidMount: function() {
     getGame(this.props.params.gameId, dispatcher);
+
+    React.findDOMNode(this.refs.gameContent).focus();
   },
 
   modalClick: function(e){
@@ -52,10 +55,37 @@ var Game = React.createClass({
     upvoteGame(this.state.game.id, true, window.dispatcher);
   },
 
+  keyPress: function(e){
+    var gamePath = "";
+    if(this.isActive('index')) {
+      gamePath = "game";
+    } else if(this.isActive('submissions')) {
+      gamePath = "submission";
+    }
+
+    if(e.keyCode === 37) {
+      var p = window.dispatcher.getStore(GamesStore).getPreviousGame(this.state.game.id);
+      this.transitionTo(gamePath, {name: p.name.toLowerCase(), gameId: p.id});
+      getGame(p.id, dispatcher);
+    } else if(e.keyCode === 39) {
+      var n = window.dispatcher.getStore(GamesStore).getNextGame(this.state.game.id);
+      this.transitionTo(gamePath, {name: n.name.toLowerCase(), gameId: n.id});
+      getGame(n.id, dispatcher);
+    }
+  },
+
   render: function(){
     var voteClasses = classSet({
       'game-upvote': true,
       'game-upvoted': this.state.game.upvoted
+    });
+
+    var images = this.state.game.images.map((link, i) => {
+      return (
+        <div key={i} className="game-screenshot">
+          <img src={link}/>
+        </div>
+      );
     });
 
     // <button className="button-steam button-icon"><img src="http://i.imgur.com/1uzEf94.png"/> Play on Steam</button>
@@ -64,7 +94,7 @@ var Game = React.createClass({
       <DocumentTitle title={"Deathsiege | Gamedation"}>
         <div className="game-overlay" onClick={this.onClose}>
           <div className="game">
-            <div className="game-content" onClick={this.modalClick}>
+            <div tabIndex="0" ref="gameContent" className="game-content" onKeyDown={this.keyPress} onClick={this.modalClick} autoFocus={true}>
               <div className="game-header">
                 <div className="game-vote" onClick={this.dontPropagate}>
                   <div className={voteClasses} onClick={this.vote}></div>
@@ -174,33 +204,7 @@ var Game = React.createClass({
 
                 <div className="game-section game-screenshots">
                   <div className="game-section-header">media</div>
-                  <div className="game-screenshot">
-                    <img src="http://i.gjcdn.net/imgserver/screenshot-thumbnail/898x1000/116552.jpg"/>
-                  </div>
-                  <div className="game-screenshot">
-                    <img src="http://i.gjcdn.net/imgserver/screenshot-thumbnail/898x1000/116551.jpg"/>
-                  </div>
-                  <div className="game-screenshot">
-                    <img src="http://i.gjcdn.net/imgserver/screenshot-thumbnail/898x1000/116550.jpg"/>
-                  </div>
-                  <div className="game-screenshot">
-                    <img src="http://i.gjcdn.net/imgserver/screenshot-thumbnail/898x1000/116552.jpg"/>
-                  </div>
-                  <div className="game-screenshot">
-                    <img src="http://i.gjcdn.net/imgserver/screenshot-thumbnail/898x1000/116551.jpg"/>
-                  </div>
-                  <div className="game-screenshot">
-                    <img src="http://i.gjcdn.net/imgserver/screenshot-thumbnail/898x1000/116550.jpg"/>
-                  </div>
-                  <div className="game-screenshot">
-                    <img src="http://i.gjcdn.net/imgserver/screenshot-thumbnail/898x1000/116552.jpg"/>
-                  </div>
-                  <div className="game-screenshot">
-                    <img src="http://i.gjcdn.net/imgserver/screenshot-thumbnail/898x1000/116551.jpg"/>
-                  </div>
-                  <div className="game-screenshot">
-                    <img src="http://i.gjcdn.net/imgserver/screenshot-thumbnail/898x1000/116550.jpg"/>
-                  </div>
+                  {images}
                 </div>
 
                 <div className="game-section">

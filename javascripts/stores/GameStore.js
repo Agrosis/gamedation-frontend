@@ -13,7 +13,8 @@ var GameStore = createStore({
         browser: false,
         iOS: false,
         android: false
-      }
+      },
+      images: []
     };
   },
 
