@@ -91,10 +91,10 @@ var Game = React.createClass({
     // <button className="button-steam button-icon"><img src="http://i.imgur.com/1uzEf94.png"/> Play on Steam</button>
 
     return (
-      <DocumentTitle title={"Deathsiege | Gamedation"}>
+      <DocumentTitle title={this.state.game.name + " | Gamedation"}>
         <div className="game-overlay" onClick={this.onClose}>
           <div className="game">
-            <div tabIndex="0" ref="gameContent" className="game-content" onKeyDown={this.keyPress} onClick={this.modalClick} autoFocus={true}>
+            <div tabIndex="0" ref="gameContent" className="game-content" onKeyDown={this.keyPress} onClick={this.modalClick}>
               <div className="game-header">
                 <div className="game-vote" onClick={this.dontPropagate}>
                   <div className={voteClasses} onClick={this.vote}></div>
