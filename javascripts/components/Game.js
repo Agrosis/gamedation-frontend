@@ -108,7 +108,15 @@ var Game = React.createClass({
               </div>
               <div className="game-all-info">
                 <div className="game-section">
-                  <a target="_blank" href="http://gamejolt.com/games/adventure/grimstorm/59563/" className="button-gamejolt button-icon button-link"><img src="https://s4i8m4c6.ssl.hwcdn.net/app/img/favicon-1.689bf878.png"/> Play on GameJolt</a>
+                  <If test={this.state.game.site === "gamejolt"}>
+                    <a target="_blank" href={this.state.game.link} className="button-gamejolt button-icon button-link"><img src="https://s4i8m4c6.ssl.hwcdn.net/app/img/favicon-1.689bf878.png"/> Play on GameJolt</a>
+                  </If>
+                  <If test={this.state.game.site === "steam"}>
+                    <a target="_blank" href={this.state.game.link} className="button-steam button-icon button-link"><img src="http://i.imgur.com/1uzEf94.png"/> Play on Steam</a>
+                  </If>
+                  <If test={this.state.game.site === "other"}>
+                    <a target="_blank" href={this.state.game.link} className="button-black button-link">Play game</a>
+                  </If>
                 </div>
 
                 <div className="game-section">

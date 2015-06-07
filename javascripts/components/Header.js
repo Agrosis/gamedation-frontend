@@ -43,6 +43,9 @@ var Header = React.createClass({
     return (
       <div className="header">
         <div className="header-content">
+          <Link to="index" className="header-nav header-title">
+            GAMEDATION
+          </Link>
           <Link activeClassName="active-header-nav" to="index" className="header-nav">
             Home
           </Link>

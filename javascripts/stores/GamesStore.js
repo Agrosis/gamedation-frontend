@@ -63,6 +63,12 @@ var GamesStore = createStore({
         
         this.emitChange();
       }
+    },
+
+    'clear-games': function(payload) {
+      this.games = [];
+
+      this.emitChange();
     }
   }
 

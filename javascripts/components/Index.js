@@ -3,6 +3,7 @@ var React = require('react');
 var DocumentTitle = require('react-document-title');
 
 var getGames = require('../actions/getGames');
+var clearGames = require('../actions/clearGames');
 
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
@@ -22,6 +23,7 @@ var Index = React.createClass({
   },
 
   getInitialState: function() {
+    clearGames(window.dispatcher);
     return assign(window.dispatcher.getStore(GamesStore).getState());
   },
 
@@ -47,7 +49,7 @@ var Index = React.createClass({
       <div>
         <div className="middle-content">
           <div className="game-items">
-            <div className="game-items-day">Today's games</div>
+            <div className="game-items-day">TODAY'S GAMES</div>
             {games}
           </div>
         </div>

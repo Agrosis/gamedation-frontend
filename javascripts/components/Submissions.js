@@ -3,6 +3,7 @@ var React = require('react');
 var DocumentTitle = require('react-document-title');
 
 var getSubmitted = require('../actions/getSubmitted');
+var clearGames = require('../actions/clearGames');
 
 var Router = require('react-router');
 var RouteHandler = Router.RouteHandler;
@@ -22,6 +23,7 @@ var Submissions = React.createClass({
   },
 
   getInitialState: function() {
+    clearGames(window.dispatcher);
     return assign(window.dispatcher.getStore(GamesStore).getState());
   },
 
@@ -47,7 +49,7 @@ var Submissions = React.createClass({
       <div>
         <div className="middle-content">
           <div className="game-items">
-            <div className="game-items-day">Latest games</div>
+            <div className="game-items-day">Latest submissions</div>
             {games}
           </div>
         </div>
