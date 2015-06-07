@@ -24,21 +24,25 @@ var UserStore = createStore({
 
   handlers: {
     'get-user': function(payload) {
+      this.user = payload.data.user;
 
       this.emitChange();
     },
 
     'log-in': function(payload) {
+      localStorage.setItem("token", payload.data.token);
 
       this.emitChange();
     },
 
     'sign-up': function(payload) {
+      localStorage.setItem("token", payload.data.token);
 
       this.emitChange();
     },
 
     'sign-out': function(payload) {
+      localStorage.removeItem("token");
 
       this.emitChange();
     }
