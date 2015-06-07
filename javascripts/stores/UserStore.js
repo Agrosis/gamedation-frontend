@@ -5,7 +5,7 @@ var UserStore = createStore({
   storeName: 'UserStore',
 
   initialize: function() {
-    this.user = {};
+    this.user = "guest";
   },
 
   getState: function() {
@@ -24,25 +24,35 @@ var UserStore = createStore({
 
   handlers: {
     'get-user': function(payload) {
-      this.user = payload.data.user;
+      if(payload.status === 200) {
+        this.user = payload.data.user;
+      }
 
       this.emitChange();
     },
 
     'log-in': function(payload) {
-      localStorage.setItem("token", payload.data.token);
+      if(payload.status === 200) {
+        localStorage.setItem("token", payload.data.token);
+        this.user = payload.data.user;
 
-      this.emitChange();
+        this.emitChange();
+      }
+
     },
 
     'sign-up': function(payload) {
-      localStorage.setItem("token", payload.data.token);
+      if(payload.status === 200) {
+        localStorage.setItem("token", payload.data.token);
+        this.user = payload.data.user;
 
-      this.emitChange();
+        this.emitChange();
+      }
     },
 
     'sign-out': function(payload) {
       localStorage.removeItem("token");
+      this.user = "guest";
 
       this.emitChange();
     }

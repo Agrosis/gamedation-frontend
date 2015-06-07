@@ -43,7 +43,7 @@ var Game = React.createClass({
   },
 
   componentDidMount: function() {
-    getGame(this.props.params.gameId, dispatcher);
+    getGame(this.props.params.gameId, window.dispatcher);
 
     React.findDOMNode(this.refs.gameContent).focus();
   },

@@ -1,6 +1,7 @@
 @import "button.less";
 @import "comment.less";
 @import "fonts.less";
+@import "footer.less";
 @import "game.less";
 @import "gameitem.less";
 @import "header.less";
@@ -9,8 +10,22 @@
 @import "textbox.less";
 @import "vendor.less";
 
+html {
+  height: 100%;
+}
+
 body {
   margin: 0 !important;
+  position: relative;
+  min-height: 100%;
+}
+
+#content, .content {
+  min-height: 100%;
+}
+
+.route-content {
+  padding-bottom: 90px;
 }
 
 .middle-content {
@@ -61,6 +76,27 @@ body {
 
   color: #ff3322;
   display: none;
+}
+
+.more-games {
+  display: block;
+
+  font-family: 'SnareDrop', sans-serif;
+  text-transform: uppercase;
+  font-size: 40px;
+  text-align: center;
+
+  color: #fff;
+  background: #ff0084;
+
+  margin-top: 12px;
+  margin-bottom: 24px;
+  padding: 16px 0px;
+  border-radius: 2px;
+
+  cursor: pointer;
+
+  animation: move-item 0.1s linear;
 }
 
 * {

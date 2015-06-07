@@ -3,7 +3,7 @@ var React = require('react');
 var Router = require('react-router');
 var classSet = require('react-classset');
 
-var Comment = React.createClass({
+var Loading = React.createClass({
 
   render: function(){
     return (
@@ -14,4 +14,4 @@ var Comment = React.createClass({
 
 });
 
-module.exports = Comment;
+module.exports = Loading;

@@ -24,7 +24,7 @@ var Login = React.createClass({
 
   login: function(e) {
     logIn({email: this.state.email, password: this.state.password}, window.dispatcher, (data) => {
-      localStorage.setItem("token", data.data.token);
+      this.props.onClose();
     });
   },
 

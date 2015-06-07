@@ -43,7 +43,7 @@ var AddGame = React.createClass({
   onLinkChange: function(e) {
     var link = e.target.value;
     if(link != "") {
-      this.setState({linkState: "loading", link: link});
+      this.setState({linkState: "loading", nameState: "loading", descriptionState: "loading", link: link});
 
       processLink(link, (response, error) => {
         if(error) {
@@ -85,9 +85,12 @@ var AddGame = React.createClass({
               });
             } else if(response.data.type == "other") {
               this.setState({
-                linkState: "success"
+                linkState: "success",
+                nameState: "none"
               })
             }
+
+            this.setState({descriptionState: "none"});
 
             if(this.state.images.length > 6) {
               this.setState({images: this.state.images.slice(0, 6)});

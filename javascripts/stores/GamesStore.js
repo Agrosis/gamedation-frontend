@@ -50,6 +50,8 @@ var GamesStore = createStore({
     },
 
     'upvote-game': function(payload) {
+      console.log(payload);
+
       var i = this.games.indexOf(this.games.filter(g => g.id === payload.gameId)[0]);
 
       if(i != -1) {

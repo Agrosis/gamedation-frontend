@@ -11,6 +11,7 @@ var RouteHandler = Router.RouteHandler;
 var assign = require('object-assign');
 
 var GameItem = require('./GameItem');
+var MoreGames = require('./MoreGames');
 
 var StoreListener = require('./mixins/StoreListener');
 var GamesStore = require('../stores/GamesStore');
@@ -36,7 +37,10 @@ var Index = React.createClass({
   },
 
   render: function() {
-    var games = this.state.games.map((g, i) => {
+    var show = this.state.games.slice(0, 14);
+    var more = this.state.games.slice(14, this.state.games.length);
+
+    var games = show.map((g, i) => {
       var gamejolt = g.site === "gamejolt";
       var steam = g.site === "steam";
 
@@ -51,6 +55,15 @@ var Index = React.createClass({
           <div className="game-items">
             <div className="game-items-day">TODAY'S GAMES</div>
             {games}
+            <MoreGames games={more}/>
+
+            <div className="game-items-day">YESTERDAY'S GAMES</div>
+            {games}
+            <MoreGames games={more}/>
+
+            <div className="game-items-day">GAMES OF JUNE 4</div>
+            {games}
+            <MoreGames games={more}/>
           </div>
         </div>
 

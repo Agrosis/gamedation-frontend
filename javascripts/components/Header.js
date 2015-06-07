@@ -9,6 +9,8 @@ var AddGame = require('./AddGame');
 var Login = require('./Login');
 var SignUp = require('./SignUp');
 
+var signOut = require('../actions/signOut');
+
 var Header = React.createClass({
 
   getInitialState: function(){
@@ -39,6 +41,10 @@ var Header = React.createClass({
     this.setState({signup: false});
   },
 
+  signOut: function(){
+    signOut(window.dispatcher);
+  },
+
   render: function(){
     return (
       <div className="header">
@@ -49,31 +55,56 @@ var Header = React.createClass({
           <Link activeClassName="active-header-nav" to="index" className="header-nav">
             Home
           </Link>
-          <Link activeClassName="active-header-nav" to="submissions" className="header-nav">
-            Submissions
-          </Link>
-          <div className="header-nav nav-right">
-            Sign out
-          </div>
-          <div className="header-nav nav-right" onClick={this.openAdd}>
-            <span className="ionicons ion-plus"></span>
-          </div>
-          <div className="header-nav nav-right" onClick={this.openLogin}>
-            Log in
-          </div>
-          <div className="header-nav nav-right" onClick={this.openSignUp}>
-            Sign up
-          </div>
+
+          <If test={this.props.user !== "guest" && this.props.user.status >= 2}>
+            <Link activeClassName="active-header-nav" to="submissions" className="header-nav">
+              Submissions
+            </Link>
+          </If>
+
+          <If test={this.props.user !== "guest"}>
+            <div className="header-nav nav-right" onClick={this.signOut}>
+              Sign out
+            </div>
+          </If>
+
+          <If test={this.props.user !== "guest"}>
+            <div className="header-nav nav-right" onClick={this.openAdd}>
+              <span className="ionicons ion-plus"></span>
+            </div>
+          </If>
+
+          <If test={this.props.user !== "guest"}>
+            <div className="header-nav nav-right">
+              {this.props.user.username}
+            </div>
+          </If>
+
+          <If test={this.props.user === "guest"}>
+            <div className="header-nav nav-right" onClick={this.openLogin}>
+              Log in
+            </div>
+          </If>
+
+          <If test={this.props.user === "guest"}>
+            <div className="header-nav nav-right" onClick={this.openSignUp}>
+              Sign up
+            </div>
+          </If>
+
         </div>
         <If test={this.state.adding}>
           <AddGame onClose={this.closeAdd}/>
         </If>
+
         <If test={this.state.login}>
           <Login onClose={this.closeLogin}/>
         </If>
+
         <If test={this.state.signup}>
           <SignUp onClose={this.closeSignUp}/>
         </If>
+
       </div>
     );
   }
