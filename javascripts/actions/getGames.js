@@ -2,9 +2,12 @@
 var axios = require('axios');
 
 var getGames = (dispatcher) => {
-  axios.get('http://localhost:8000/api/games')
+  dispatcher.dispatch('start-loading');
+  dispatcher.dispatch('clear-games');
+  axios.get('http://localhost:8000/api/games', {headers: {'Authorization': localStorage.getItem("token")}})
        .then((response) => {
-          dispatcher.dispatch('get-games', response.data)
+          dispatcher.dispatch('stop-loading');
+          dispatcher.dispatch('get-games', response.data);
        })
        .then((error) => {
           if(error) console.error(error);

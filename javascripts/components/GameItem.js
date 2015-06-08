@@ -83,7 +83,7 @@ var GameItem = React.createClass({
           </If>
 
           <div className="game-item-avatar">
-            <img src="https://secure.gravatar.com/avatar/802540db8043503a3c3ead05d51c0139?s=64"/>
+            <img src={this.props.posterAvatar}/>
           </div>
         </div>
       </div>

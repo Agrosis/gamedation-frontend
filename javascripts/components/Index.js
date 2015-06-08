@@ -10,8 +10,8 @@ var RouteHandler = Router.RouteHandler;
 
 var assign = require('object-assign');
 
-var GameItem = require('./GameItem');
-var MoreGames = require('./MoreGames');
+var If = require('./helpers/If');
+var GameList = require('./GameList');
 
 var StoreListener = require('./mixins/StoreListener');
 var GamesStore = require('../stores/GamesStore');
@@ -37,40 +37,20 @@ var Index = React.createClass({
   },
 
   render: function() {
-    var show = this.state.games.slice(0, 14);
-    var more = this.state.games.slice(14, this.state.games.length);
-
-    var games = show.map((g, i) => {
-      var gamejolt = g.site === "gamejolt";
-      var steam = g.site === "steam";
-
-      return (
-        <GameItem key={i} id={g.id} platforms={g.platforms} upvoted={g.upvoted} gamejolt={gamejolt} steam={steam} name={g.name} description={g.description} points={g.points}/>
-      );
-    });
-
     return (
-      <div>
-        <div className="middle-content">
-          <div className="game-items">
-            <div className="game-items-day">TODAY'S GAMES</div>
-            {games}
-            <MoreGames games={more}/>
-
-            <div className="game-items-day">YESTERDAY'S GAMES</div>
-            {games}
-            <MoreGames games={more}/>
-
-            <div className="game-items-day">GAMES OF JUNE 4</div>
-            {games}
-            <MoreGames games={more}/>
+      <If test={this.state.games.length != 0}>
+        <div>
+          <div className="middle-content">
+            <GameList games={this.state.games} name="today's games"/>
+            <GameList games={this.state.games} name="yesterday's games"/>
+            <GameList games={this.state.games} name="games of june 5"/>
           </div>
-        </div>
 
-        <DocumentTitle title='Gamedation'>
-          <RouteHandler/>
-        </DocumentTitle>
-      </div>
+          <DocumentTitle title='Gamedation'>
+            <RouteHandler/>
+          </DocumentTitle>
+        </div>
+      </If>
     );
   }
 

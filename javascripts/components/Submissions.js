@@ -10,7 +10,8 @@ var RouteHandler = Router.RouteHandler;
 
 var assign = require('object-assign');
 
-var GameItem = require('./GameItem');
+var If = require('./helpers/If');
+var GameList = require('./GameList');
 
 var StoreListener = require('./mixins/StoreListener');
 var GamesStore = require('../stores/GamesStore');
@@ -36,28 +37,18 @@ var Submissions = React.createClass({
   },
 
   render: function() {
-    var games = this.state.games.map((g, i) => {
-      var gamejolt = g.site === "gamejolt";
-      var steam = g.site === "steam";
-
-      return (
-        <GameItem key={i} id={g.id} platforms={g.platforms} upvoted={g.upvoted} gamejolt={gamejolt} steam={steam} name={g.name} description={g.description} points={g.points}/>
-      );
-    });
-
     return (
-      <div>
-        <div className="middle-content">
-          <div className="game-items">
-            <div className="game-items-day">Latest submissions</div>
-            {games}
+      <If test={this.state.games.length != 0}>
+        <div>
+          <div className="middle-content">
+            <GameList games={this.state.games} all={true} name="latest submissions"/>
           </div>
-        </div>
 
-        <DocumentTitle title='Submissions | Gamedation'>
-          <RouteHandler/>
-        </DocumentTitle>
-      </div>
+          <DocumentTitle title='Submissions | Gamedation'>
+            <RouteHandler/>
+          </DocumentTitle>
+        </div>
+      </If>
     );
   }
 

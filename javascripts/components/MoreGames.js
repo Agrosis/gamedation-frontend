@@ -22,7 +22,7 @@ var MoreGames = React.createClass({
       var steam = g.site === "steam";
 
       return (
-        <GameItem key={i} id={g.id} platforms={g.platforms} upvoted={g.upvoted} gamejolt={gamejolt} steam={steam} name={g.name} description={g.description} points={g.points}/>
+        <GameItem key={i} id={g.id} platforms={g.platforms} upvoted={g.upvoted} gamejolt={gamejolt} steam={steam} name={g.name} description={g.description} points={g.points} posterAvatar={g.posterAvatar}/>
       );
     });
 

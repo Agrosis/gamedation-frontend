@@ -3,6 +3,7 @@ var React = require('react');
 var Textbox = require('./form/Textbox');
 
 var logIn = require('../actions/logIn');
+var getGames = require('../actions/getGames');
 
 var Login = React.createClass({
 
@@ -25,6 +26,8 @@ var Login = React.createClass({
   login: function(e) {
     logIn({email: this.state.email, password: this.state.password}, window.dispatcher, (data) => {
       this.props.onClose();
+
+      getGames(window.dispatcher);
     });
   },
 

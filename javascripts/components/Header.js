@@ -12,6 +12,7 @@ var SignUp = require('./SignUp');
 var signOut = require('../actions/signOut');
 
 var Header = React.createClass({
+  mixins: [Router.Navigation],
 
   getInitialState: function(){
     return {adding: false, login: false, signup: false};
@@ -43,6 +44,7 @@ var Header = React.createClass({
 
   signOut: function(){
     signOut(window.dispatcher);
+    this.transitionTo('index');
   },
 
   render: function(){
@@ -58,7 +60,7 @@ var Header = React.createClass({
 
           <If test={this.props.user !== "guest" && this.props.user.status >= 2}>
             <Link activeClassName="active-header-nav" to="submissions" className="header-nav">
-              Submissions
+              Curate
             </Link>
           </If>
 
@@ -75,8 +77,8 @@ var Header = React.createClass({
           </If>
 
           <If test={this.props.user !== "guest"}>
-            <div className="header-nav nav-right">
-              {this.props.user.username}
+            <div className="header-nav header-avatar nav-right">
+              <img src={this.props.user.avatar}/>
             </div>
           </If>
 

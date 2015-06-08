@@ -17,6 +17,7 @@ var upvoteGame = require('../actions/upvoteGame');
 var gameName = require('../actions/gameName');
 
 var If = require('./helpers/If');
+var Loading = require('./helpers/Loading');
 var assign = require('object-assign');
 
 var Game = React.createClass({
@@ -89,10 +90,20 @@ var Game = React.createClass({
       );
     });
 
+    var upvoters = this.state.upvoters.map((avatar, i) => {
+      return (
+        <div key={i} className="game-upvoter">
+          <img src={avatar}/>
+        </div>
+      );
+    });
+
     // <button className="button-steam button-icon"><img src="http://i.imgur.com/1uzEf94.png"/> Play on Steam</button>
 
+    var title = this.state.game.name || "Game";
+
     return (
-      <DocumentTitle title={this.state.game.name + " | Gamedation"}>
+      <DocumentTitle title={title + " | Gamedation"}>
         <div className="game-overlay" onClick={this.onClose}>
           <div className="game">
             <div tabIndex="0" ref="gameContent" className="game-content" onKeyDown={this.keyPress} onClick={this.modalClick}>
@@ -107,130 +118,69 @@ var Game = React.createClass({
                </div>
               </div>
               <div className="game-all-info">
-                <div className="game-section">
-                  <If test={this.state.game.site === "gamejolt"}>
-                    <a target="_blank" href={this.state.game.link} className="button-gamejolt button-icon button-link"><img src="https://s4i8m4c6.ssl.hwcdn.net/app/img/favicon-1.689bf878.png"/> Play on GameJolt</a>
-                  </If>
-                  <If test={this.state.game.site === "steam"}>
-                    <a target="_blank" href={this.state.game.link} className="button-steam button-icon button-link"><img src="http://i.imgur.com/1uzEf94.png"/> Play on Steam</a>
-                  </If>
-                  <If test={this.state.game.site === "other"}>
-                    <a target="_blank" href={this.state.game.link} className="button-black button-link">Play game</a>
-                  </If>
-                </div>
+                <Loading loaded={this.state.game.name != false}>
+                  <div>
+                    <div className="game-section">
+                      <If test={this.state.game.site === "gamejolt"}>
+                        <a target="_blank" href={this.state.game.link} className="button-gamejolt button-icon button-link"><img src="https://s4i8m4c6.ssl.hwcdn.net/app/img/favicon-1.689bf878.png"/> Play on GameJolt</a>
+                      </If>
+                      <If test={this.state.game.site === "steam"}>
+                        <a target="_blank" href={this.state.game.link} className="button-steam button-icon button-link"><img src="http://i.imgur.com/1uzEf94.png"/> Play on Steam</a>
+                      </If>
+                      <If test={this.state.game.site === "other"}>
+                        <a target="_blank" href={this.state.game.link} className="button-black button-link">Play game</a>
+                      </If>
+                    </div>
 
-                <div className="game-section">
-                  <div className="game-section-header">available for</div>
-                  <If test={this.state.game.platforms.windows}>
-                    <div className="game-platform-windows"></div>
-                  </If>
-                  <If test={this.state.game.platforms.mac}>
-                    <div className="game-platform-mac"></div>
-                  </If>
-                  <If test={this.state.game.platforms.linux}>
-                    <div className="game-platform-linux"></div>
-                  </If>
-                  <If test={this.state.game.platforms.browser}>
-                    <div className="game-platform-browser"></div>
-                  </If>
-                  <If test={this.state.game.platforms.iOS}>
-                    <div className="game-platform-ios"></div>
-                  </If>
-                  <If test={this.state.game.platforms.android}>
-                    <div className="game-platform-android"></div>
-                  </If>
-                </div>
+                    <div className="game-section">
+                      <div className="game-section-header">available for</div>
+                      <If test={this.state.game.platforms.windows}>
+                        <div className="game-platform-windows"></div>
+                      </If>
+                      <If test={this.state.game.platforms.mac}>
+                        <div className="game-platform-mac"></div>
+                      </If>
+                      <If test={this.state.game.platforms.linux}>
+                        <div className="game-platform-linux"></div>
+                      </If>
+                      <If test={this.state.game.platforms.browser}>
+                        <div className="game-platform-browser"></div>
+                      </If>
+                      <If test={this.state.game.platforms.iOS}>
+                        <div className="game-platform-ios"></div>
+                      </If>
+                      <If test={this.state.game.platforms.android}>
+                        <div className="game-platform-android"></div>
+                      </If>
+                    </div>
 
-                <div className="game-section">
-                  <div className="game-section-header">upvoters</div>
-                  <div className="game-upvoter">
-                    <img src="https://secure.gravatar.com/avatar/802540db8043503a3c3ead05d51c0139?s=64"/>
-                  </div>
-                  <div className="game-upvoter">
-                    <img src="https://secure.gravatar.com/avatar/802540db8043503a3c3ead05d51c0139?s=64"/>
-                  </div>
-                  <div className="game-upvoter">
-                    <img src="https://secure.gravatar.com/avatar/802540db8043503a3c3ead05d51c0139?s=64"/>
-                  </div>
-                  <div className="game-upvoter">
-                    <img src="https://secure.gravatar.com/avatar/802540db8043503a3c3ead05d51c0139?s=64"/>
-                  </div>
-                  <div className="game-upvoter">
-                    <img src="https://secure.gravatar.com/avatar/802540db8043503a3c3ead05d51c0139?s=64"/>
-                  </div>
-                  <div className="game-upvoter">
-                    <img src="https://secure.gravatar.com/avatar/802540db8043503a3c3ead05d51c0139?s=64"/>
-                  </div>
-                  <div className="game-upvoter">
-                    <img src="https://secure.gravatar.com/avatar/802540db8043503a3c3ead05d51c0139?s=64"/>
-                  </div>
-                  <div className="game-upvoter">
-                    <img src="https://secure.gravatar.com/avatar/802540db8043503a3c3ead05d51c0139?s=64"/>
-                  </div>
-                  <div className="game-upvoter">
-                    <img src="https://secure.gravatar.com/avatar/802540db8043503a3c3ead05d51c0139?s=64"/>
-                  </div>
-                  <div className="game-upvoter">
-                    <img src="https://secure.gravatar.com/avatar/802540db8043503a3c3ead05d51c0139?s=64"/>
-                  </div>
-                  <div className="game-upvoter">
-                    <img src="https://secure.gravatar.com/avatar/802540db8043503a3c3ead05d51c0139?s=64"/>
-                  </div>
-                  <div className="game-upvoter">
-                    <img src="https://secure.gravatar.com/avatar/802540db8043503a3c3ead05d51c0139?s=64"/>
-                  </div>
-                  <div className="game-upvoter">
-                    <img src="https://secure.gravatar.com/avatar/802540db8043503a3c3ead05d51c0139?s=64"/>
-                  </div>
-                  <div className="game-upvoter">
-                    <img src="https://secure.gravatar.com/avatar/802540db8043503a3c3ead05d51c0139?s=64"/>
-                  </div>
-                  <div className="game-upvoter">
-                    <img src="https://secure.gravatar.com/avatar/802540db8043503a3c3ead05d51c0139?s=64"/>
-                  </div>
-                  <div className="game-upvoter">
-                    <img src="https://secure.gravatar.com/avatar/802540db8043503a3c3ead05d51c0139?s=64"/>
-                  </div>
-                  <div className="game-upvoter">
-                    <img src="https://secure.gravatar.com/avatar/802540db8043503a3c3ead05d51c0139?s=64"/>
-                  </div>
-                  <div className="game-upvoter">
-                    <img src="https://secure.gravatar.com/avatar/802540db8043503a3c3ead05d51c0139?s=64"/>
-                  </div>
-                  <div className="game-upvoter">
-                    <img src="https://secure.gravatar.com/avatar/802540db8043503a3c3ead05d51c0139?s=64"/>
-                  </div>
-                  <div className="game-upvoter">
-                    <img src="https://secure.gravatar.com/avatar/802540db8043503a3c3ead05d51c0139?s=64"/>
-                  </div>
-                  <div className="game-upvoter">
-                    <img src="https://secure.gravatar.com/avatar/802540db8043503a3c3ead05d51c0139?s=64"/>
-                  </div>
-                  <div className="game-upvoter">
-                    <img src="https://secure.gravatar.com/avatar/802540db8043503a3c3ead05d51c0139?s=64"/>
-                  </div>
-                </div>
+                    <div className="game-section">
+                      <div className="game-section-header">upvoters</div>
+                      {upvoters}
+                    </div>
 
-                <div className="game-section game-screenshots">
-                  <div className="game-section-header">media</div>
-                  {images}
-                </div>
+                    <div className="game-section game-screenshots">
+                      <div className="game-section-header">media</div>
+                      {images}
+                    </div>
 
-                <div className="game-section">
-                  <div className="game-section-header">comments</div>
-                  <Comment/>
-                  <Comment reply={true}/>
-                  <Comment/>
-                  <Comment/>
+                    <div className="game-section">
+                      <div className="game-section-header">comments</div>
+                      <Comment/>
+                      <Comment reply={true}/>
+                      <Comment/>
+                      <Comment/>
 
-                  <Comment/>
+                      <Comment/>
 
-                  <Comment/>
+                      <Comment/>
 
-                  <Comment/>
+                      <Comment/>
 
-                  <Comment/>
-                </div>
+                      <Comment/>
+                    </div>
+                  </div>
+                </Loading>
               </div>
             </div>
           </div>

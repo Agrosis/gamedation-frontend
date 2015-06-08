@@ -44,14 +44,31 @@ var GamesStore = createStore({
 
   handlers: {
     'get-games': function(payload) {
+      this.games = payload.data.games.sort((a, b) => {
+        return b.points - a.points
+      });
+
+      this.emitChange();
+    },
+
+    'get-submissions': function(payload) {
       this.games = payload.data.games;
 
       this.emitChange();
     },
 
-    'upvote-game': function(payload) {
-      console.log(payload);
+    'sign-out': function(payload) {
+      var n = this.games.map(g => {
+        g.upvoted = false;
+        return g;
+      });
 
+      this.games = n;
+
+      this.emitChange();
+    },
+
+    'upvote-game': function(payload) {
       var i = this.games.indexOf(this.games.filter(g => g.id === payload.gameId)[0]);
 
       if(i != -1) {

@@ -16,11 +16,13 @@ var GameStore = createStore({
       },
       images: []
     };
+    this.upvoters = [];
   },
 
   getState: function() {
     return {
-      game: this.game
+      game: this.game,
+      upvoters: this.upvoters
     };
   },
 
@@ -30,11 +32,13 @@ var GameStore = createStore({
 
   rehydrate: function(state) {
     this.game = state.game;
+    this.upvoters = state.upvoters;
   },
 
   handlers: {
     'get-game': function(payload) {
       this.game = payload.data.game;
+      this.upvoters = payload.data.upvoters;
 
       this.emitChange();
     },

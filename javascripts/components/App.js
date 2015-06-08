@@ -5,6 +5,7 @@ var RouteHandler = Router.RouteHandler;
 
 var Header = require('./Header');
 var Footer = require('./Footer');
+var LoadingPage = require('./LoadingPage');
 
 var UserStore = require('../stores/UserStore');
 var StoreListener = require('./mixins/StoreListener');
@@ -34,11 +35,11 @@ var App = React.createClass({
   render: function(){
     return (
       <div className="content">
+        <LoadingPage/>
         <Header user={this.state.user}/>
         <div className="route-content">
           <RouteHandler/>
         </div>
-        <Footer/>
       </div>
     );
   }

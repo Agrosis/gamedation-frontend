@@ -6,6 +6,10 @@ var Router = require('react-router');
 var Navigation = Router.Navigation;
 
 var Textbox = require('./form/Textbox');
+var Loading = require('./helpers/Loading');
+var If = require('./helpers/If');
+
+var UserStore = require('../stores/UserStore');
 
 var processLink = require('../actions/processLink');
 var submitGame = require('../actions/submitGame');
@@ -32,7 +36,11 @@ var AddGame = React.createClass({
 
       imageState: "none",
       currentImage: "",
-      images: []
+      images: [],
+
+      loading: false,
+      submitted: false,
+      error: ""
     };
   },
 
@@ -173,6 +181,8 @@ var AddGame = React.createClass({
   },
 
   submitForm: function(e) {
+    this.setState({loading: true});
+
     var formData = {
       link: this.state.link,
       name: this.state.name,
@@ -187,8 +197,18 @@ var AddGame = React.createClass({
     };
 
     submitGame(formData, (data) => {
-      this.props.onClose();
-      this.transitionTo('game', {name: gameName(data.data.game.name), gameId: data.data.game.id});
+      this.setState({loading: false});
+
+      if(data.status === 200) {
+        this.setState({submitted: true});
+      } else {
+        var status = window.dispatcher.getStore(UserStore).getState().user.status;
+        if(status === 1) {
+          this.setState({error: "You can only submit 3 games per 24 hours."});
+        } else if(status === 2) {
+          this.setState({error: "You can only submit 10 games per 24 hours."});
+        }
+      }
     });
   },
 
@@ -203,50 +223,64 @@ var AddGame = React.createClass({
     });
 
     return (
-      <DocumentTitle title="Submit game | Gamedation">
-        <div className="modal-overlay" onClick={this.props.onClose}>
-          <div className="modal-container">
-            <div className="modal">
-              <div className="modal-content pure-u-10-24" onClick={this.modalClick}>
-                <div className="modal-header">Submit a Game</div>
+        <DocumentTitle title="Submit game | Gamedation">
+          <div className="modal-overlay" onClick={this.props.onClose}>
+            <div className="modal-container">
+              <div className="modal">
+                <div className="modal-content pure-u-10-24" onClick={this.modalClick}>
+                  <If test={this.state.submitted}>
+                    <div>
+                      <div className="submit-result">{this.state.name} will be featured if the curators like it!</div>
+                    </div>
+                  </If>
 
-                <div>
-                  <label className="pure-u-4-24">Game Link</label>
-                  <Textbox name="link" onChange={this.onLinkChange} status={this.state.linkState} containerClasses="pure-u-20-24" placeholder="Paste game link here (e.g. GameJolt, Steam)"/>
+                  <If test={!this.state.submitted}>
+                    <div>
+                      <div className="modal-header">Submit a Game</div>
 
-                  <label className="pure-u-4-24">Name</label>
-                  <Textbox name="name" onChange={this.onNameChange} status={this.state.nameState} value={this.state.name} containerClasses="pure-u-20-24" placeholder="Enter game name"/>
+                      <Loading loaded={!this.state.loading}>
+                        <div>
+                          <label className="pure-u-4-24">Game Link</label>
+                          <Textbox name="link" onChange={this.onLinkChange} status={this.state.linkState} containerClasses="pure-u-20-24" placeholder="Paste game link here (e.g. GameJolt, Steam)"/>
 
-                  <label className="pure-u-4-24">Description</label>
-                  <Textbox name="description" onChange={this.onDescriptionChange} status={this.state.descriptionState} containerClasses="pure-u-20-24" placeholder="Enter game description"/>
+                          <label className="pure-u-4-24">Name</label>
+                          <Textbox name="name" onChange={this.onNameChange} status={this.state.nameState} value={this.state.name} containerClasses="pure-u-20-24" placeholder="Enter game name"/>
 
-                  <label className="pure-u-4-24">Platforms</label>
-                  <div className="pure-u-20-24 modal-checkboxes">
-                    <div className="modal-checkbox pure-u-5-24"><input name="windows" ref="windows" onChange={this.windows} type="checkbox" checked={this.state.windows}/> Windows</div>
-                    <div className="modal-checkbox pure-u-5-24"><input name="mac" ref="mac" onChange={this.mac} type="checkbox" checked={this.state.mac}/> Mac</div>
-                    <div className="modal-checkbox pure-u-5-24"><input name="linux" ref="linux" onChange={this.linux} type="checkbox" checked={this.state.linux}/> Linux</div>
-                    <div className="modal-checkbox pure-u-5-24"><input name="android" ref="android" onChange={this.android} type="checkbox" checked={this.state.android}/> Android</div>
-                    <div className="modal-checkbox pure-u-5-24"><input name="browser" ref="browser" onChange={this.browser} type="checkbox" checked={this.state.browser}/> Browser</div>
-                    <div className="modal-checkbox pure-u-5-24"><input name="iOS" ref="iOS" onChange={this.iOS} type="checkbox" checked={this.state.iOS}/> iOS</div>
-                  </div>
+                          <label className="pure-u-4-24">Description</label>
+                          <Textbox name="description" onChange={this.onDescriptionChange} status={this.state.descriptionState} containerClasses="pure-u-20-24" placeholder="Enter game description"/>
 
-                  <label className="pure-u-4-24">Images</label>
-                  <div className="pure-u-20-24">
-                    <Textbox value={this.state.currentImage} status={this.state.imageState} name="image" containerClasses="pure-u-20-24" onChange={this.onImageChange} placeholder="Enter an image link here... (6 max)"/>
-                    <button onClick={this.addImage} className="button-blue pure-u-4-24 button-sharp">Add</button>
+                          <label className="pure-u-4-24">Platforms</label>
+                          <div className="pure-u-20-24 modal-checkboxes">
+                            <div className="modal-checkbox pure-u-5-24"><input name="windows" ref="windows" onChange={this.windows} type="checkbox" checked={this.state.windows}/> Windows</div>
+                            <div className="modal-checkbox pure-u-5-24"><input name="mac" ref="mac" onChange={this.mac} type="checkbox" checked={this.state.mac}/> Mac</div>
+                            <div className="modal-checkbox pure-u-5-24"><input name="linux" ref="linux" onChange={this.linux} type="checkbox" checked={this.state.linux}/> Linux</div>
+                            <div className="modal-checkbox pure-u-5-24"><input name="android" ref="android" onChange={this.android} type="checkbox" checked={this.state.android}/> Android</div>
+                            <div className="modal-checkbox pure-u-5-24"><input name="browser" ref="browser" onChange={this.browser} type="checkbox" checked={this.state.browser}/> Browser</div>
+                            <div className="modal-checkbox pure-u-5-24"><input name="iOS" ref="iOS" onChange={this.iOS} type="checkbox" checked={this.state.iOS}/> iOS</div>
+                          </div>
 
-                    {images}
-                  </div> 
+                          <label className="pure-u-4-24">Images</label>
+                          <div className="pure-u-20-24">
+                            <Textbox value={this.state.currentImage} status={this.state.imageState} name="image" containerClasses="pure-u-20-24" onChange={this.onImageChange} placeholder="Enter an image link here... (6 max)"/>
+                            <button onClick={this.addImage} className="button-blue pure-u-4-24 button-sharp">Add</button>
 
-                  <div className="modal-submit-button">
-                    <button className="button-green button-full" onClick={this.submitForm}>Submit game</button>
-                  </div>
+                            {images}
+                          </div> 
+
+                          <div className="error">{this.state.error}</div>
+
+                          <div className="modal-submit-button">
+                            <button className="button-green button-full" onClick={this.submitForm}>Submit game</button>
+                          </div>
+                        </div>
+                      </Loading>
+                    </div>
+                  </If>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </DocumentTitle>
+        </DocumentTitle>
     );
   }
 
