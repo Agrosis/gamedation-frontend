@@ -28,10 +28,6 @@ var App = React.createClass({
     this.setState(assign(window.dispatcher.getStore(UserStore).getState()));
   },
 
-  componentDidMount: function() {
-    getUser(window.dispatcher);
-  },
-
   render: function(){
     return (
       <div className="content">

@@ -9,6 +9,8 @@ var Navigation = Router.Navigation;
 var Comment = require('./Comment');
 
 var StoreListener = require('./mixins/StoreListener');
+
+var UserStore = require('../stores/UserStore');
 var GameStore = require('../stores/GameStore');
 var GamesStore = require('../stores/GamesStore');
 

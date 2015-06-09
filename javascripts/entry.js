@@ -9,6 +9,8 @@ var Routes = require('./Routes');
 var app = require('./app');
 var dehydratedState = {};
 
+var getUser = require('./actions/getUser');
+
 window.React = React;
 
 function RenderApp(dispatcher, Handler){
@@ -20,7 +22,8 @@ app.rehydrate(dehydratedState);
 var dispatcher = app;
 window.dispatcher = dispatcher;
 
-var firstRender = true;
-Router.run(Routes, Router.HistoryLocation, function (Handler, state) {
-  RenderApp(dispatcher, Handler);
+getUser(window.dispatcher, () => {
+  Router.run(Routes, Router.HistoryLocation, function (Handler, state) {
+    RenderApp(dispatcher, Handler);
+  });
 });
