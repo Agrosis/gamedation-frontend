@@ -11,7 +11,21 @@ var getAdmin = require('../../actions/admin/getAdmin');
 var addCurator = require('../../actions/admin/addCurator');
 var loading = require('../../actions/loading');
 
+var UserStore = require('../../stores/UserStore');
+
 var Admin = React.createClass({
+  statics: {
+    willTransitionTo(transition, params, query, callback) {
+      var user = window.dispatcher.getStore(UserStore).getState().user;
+      if(user != "guest" && user.status == 3) {
+        callback();
+      } else {
+        transition.redirect('index');
+        callback();
+      }
+    }
+  },
+
   getInitialState: function() {
     return {usernameText: "", curators: []};
   },

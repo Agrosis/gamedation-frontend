@@ -15,12 +15,23 @@ var GameList = require('./GameList');
 
 var StoreListener = require('./mixins/StoreListener');
 var GamesStore = require('../stores/GamesStore');
+var UserStore = require('../stores/UserStore');
 
 var Submissions = React.createClass({
   mixins: [StoreListener],
 
   statics: {
-    storeListeners: [GamesStore]
+    storeListeners: [GamesStore],
+
+    willTransitionTo(transition, params, query, callback) {
+      var user = window.dispatcher.getStore(UserStore).getState().user;
+      if(user != "guest" && user.status >= 2) {
+        callback();
+      } else {
+        transition.redirect('index');
+        callback();
+      }
+    }
   },
 
   getInitialState: function() {
