@@ -22,31 +22,37 @@ var GamesStore = createStore({
     this.games = state.games;
   },
 
-  getNextGame: function(gameId) {
-    var i = this.games.indexOf(this.games.filter(g => g.id === gameId)[0]);
+  getGameDay: function(gameId) {
+    return this.games.indexOf(this.games.filter(d => d.filter(g => g.id === gameId)[0])[0]);
+  },
 
-    if(i == this.games.length - 1) {
-      return this.games[i];
+  getNextGame: function(gameId) {
+    var day = this.games[this.getGameDay(gameId)]
+    var i = day.indexOf(day.filter(g => g.id === gameId)[0]);
+
+    if(i == day.length - 1) {
+      return day[i];
     } else if(i != -1) {
-      return this.games[i + 1];
+      return day[i + 1];
     }
   },
 
   getPreviousGame: function(gameId) {
-    var i = this.games.indexOf(this.games.filter(g => g.id === gameId)[0]);
+    var day = this.games[this.getGameDay(gameId)];
+    var i = day.indexOf(day.filter(g => g.id === gameId)[0]);
 
     if(i == 0) {
-      return this.games[i];
+      return day[i];
     } else if(i != -1) {
-      return this.games[i - 1];
+      return day[i - 1];
     }
   },
 
   handlers: {
     'get-games': function(payload) {
-      this.games = payload.data.games.sort((a, b) => {
-        return b.points - a.points
-      });
+      this.games = payload.data.games.map(d => d.sort((a, b) => {
+        return b.points - a.points;
+      }));
 
       this.emitChange();
     },
@@ -58,10 +64,10 @@ var GamesStore = createStore({
     },
 
     'sign-out': function(payload) {
-      var n = this.games.map(g => {
-        g.upvoted = false;
-        return g;
-      });
+      var n = this.games.map(g => g.map(d => {
+        d.upvoted = false;
+        return d;
+      }));
 
       this.games = n;
 
@@ -69,15 +75,17 @@ var GamesStore = createStore({
     },
 
     'upvote-game': function(payload) {
-      var i = this.games.indexOf(this.games.filter(g => g.id === payload.gameId)[0]);
+      var d = this.getGameDay(payload.gameId);
+      var day = this.games[d];
+      var i = day.indexOf(day.filter(g => g.id === payload.gameId)[0]);
 
       if(i != -1) {
-        if(this.games[i].upvoted) {
-          this.games[i].upvoted = false;
-          this.games[i].points -= 1;
+        if(day[i].upvoted) {
+          this.games[d][i].upvoted = false;
+          this.games[d][i].points -= 1;
         } else {
-          this.games[i].upvoted = true;
-          this.games[i].points += 1;
+          this.games[d][i].upvoted = true;
+          this.games[d][i].points += 1;
         }
         
         this.emitChange();

@@ -16,6 +16,8 @@ var GameList = require('./GameList');
 var StoreListener = require('./mixins/StoreListener');
 var GamesStore = require('../stores/GamesStore');
 
+var getDate = require('../actions/getDate');
+
 var Index = React.createClass({
   mixins: [StoreListener],
 
@@ -37,13 +39,15 @@ var Index = React.createClass({
   },
 
   render: function() {
+    var d = getDate(new Date().getTime() - 86400000 * 2).toLowerCase();
+
     return (
       <If test={this.state.games.length != 0}>
         <div>
           <div className="middle-content">
-            <GameList games={this.state.games} name="today's games"/>
-            <GameList games={this.state.games} name="yesterday's games"/>
-            <GameList games={this.state.games} name="games of june 5"/>
+            <GameList games={this.state.games[0]} name="today's games"/>
+            <GameList games={this.state.games[1]} name="yesterday's games"/>
+            <GameList games={this.state.games[2]} name={"games of " + d}/>
           </div>
 
           <DocumentTitle title='Gamedation'>

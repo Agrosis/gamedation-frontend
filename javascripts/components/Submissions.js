@@ -49,10 +49,10 @@ var Submissions = React.createClass({
 
   render: function() {
     return (
-      <If test={this.state.games.length != 0}>
+      <If test={this.state.games.length != 0 && this.state.games[0].length != 0}>
         <div>
           <div className="middle-content">
-            <GameList games={this.state.games} all={true} name="latest submissions"/>
+            <GameList games={this.state.games[0]} all={true} name="latest submissions"/>
           </div>
 
           <DocumentTitle title='Submissions | Gamedation'>

@@ -55,7 +55,7 @@ var GameItem = React.createClass({
         <div className="game-item-info">
           <div className="game-item-title">{this.props.name}</div>
           <If test={this.props.gamejolt || false}>
-            <img className="game-item-site" src="https://s4i8m4c6.ssl.hwcdn.net/app/img/favicon-1.689bf878.png"/>
+            <img className="game-item-site" src="http://i.imgur.com/D5FC9BI.png"/>
           </If>
           <If test={this.props.steam || false}>
             <img className="game-item-site" src="http://i.imgur.com/1uzEf94.png"/>

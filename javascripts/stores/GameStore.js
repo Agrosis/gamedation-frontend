@@ -17,12 +17,14 @@ var GameStore = createStore({
       images: []
     };
     this.upvoters = [];
+    this.comments = [];
   },
 
   getState: function() {
     return {
       game: this.game,
-      upvoters: this.upvoters
+      upvoters: this.upvoters,
+      comments: this.comments
     };
   },
 
@@ -33,12 +35,14 @@ var GameStore = createStore({
   rehydrate: function(state) {
     this.game = state.game;
     this.upvoters = state.upvoters;
+    this.comments = state.comments;
   },
 
   handlers: {
     'get-game': function(payload) {
       this.game = payload.data.game;
       this.upvoters = payload.data.upvoters;
+      this.comments = payload.data.comments;
 
       this.emitChange();
     },
@@ -55,7 +59,16 @@ var GameStore = createStore({
           
         this.emitChange();
       }
+    },
+
+    'game-comment': function(payload) {
+      if(payload.status == 200) {
+        this.comments.unshift(payload.data.comment);
+      }
+
+      this.emitChange();
     }
+
   }
 
 });
