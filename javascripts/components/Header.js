@@ -58,37 +58,43 @@ var Header = React.createClass({
             Home
           </Link>
 
-          <If test={this.props.user !== "guest" && this.props.user.status >= 2}>
+          <If test={this.props.user != "guest" && this.props.user.status >= 2}>
             <Link activeClassName="active-header-nav" to="submissions" className="header-nav">
               Curate
             </Link>
           </If>
 
-          <If test={this.props.user !== "guest"}>
+          <If test={this.props.user != "guest" && this.props.user.status == 3}>
+            <Link activeClassName="active-header-nav" to="admin" className="header-nav">
+              Admin
+            </Link>
+          </If>
+
+          <If test={this.props.user != "guest"}>
             <div className="header-nav nav-right" onClick={this.signOut}>
               Sign out
             </div>
           </If>
 
-          <If test={this.props.user !== "guest"}>
+          <If test={this.props.user != "guest"}>
             <div className="header-nav nav-right" onClick={this.openAdd}>
               <span className="ionicons ion-plus"></span>
             </div>
           </If>
 
-          <If test={this.props.user !== "guest"}>
+          <If test={this.props.user != "guest"}>
             <div className="header-nav header-avatar nav-right">
               <img src={this.props.user.avatar}/>
             </div>
           </If>
 
-          <If test={this.props.user === "guest"}>
+          <If test={this.props.user == "guest"}>
             <div className="header-nav nav-right" onClick={this.openLogin}>
               Log in
             </div>
           </If>
 
-          <If test={this.props.user === "guest"}>
+          <If test={this.props.user == "guest"}>
             <div className="header-nav nav-right" onClick={this.openSignUp}>
               Sign up
             </div>
