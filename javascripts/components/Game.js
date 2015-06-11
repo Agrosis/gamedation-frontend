@@ -39,7 +39,7 @@ var Game = React.createClass({
   },
 
   getInitialState: function() {
-    return assign(window.dispatcher.getStore(GameStore).getState(), {commentText: "", commenting: false});
+    return assign(window.dispatcher.getStore(GameStore).getState(), {commentText: "", commenting: false, selectedImage: 0, imageLoaded: false});
   },
 
   onChange: function() {
@@ -77,6 +77,18 @@ var Game = React.createClass({
     }
   },
 
+  selectImage: function(i) {
+    return (e) => {
+      if(this.state.selectedImage != i) {
+        this.setState({selectedImage: i, imageLoaded: false});
+      }
+    }
+  },
+
+  imageLoaded: function(e) {
+    this.setState({imageLoaded: true});
+  },
+
   keyPress: function(e){
     var gamePath = "";
     if(this.isActive('index')) {
@@ -103,8 +115,13 @@ var Game = React.createClass({
     });
 
     var images = this.state.game.images.map((link, i) => {
+      var imageClasses = classSet({
+        "game-screenshot": true,
+        "game-active-screenshot": this.state.selectedImage === i
+      });
+
       return (
-        <div key={i} className="game-screenshot">
+        <div key={i} onClick={this.selectImage(i)} className={imageClasses}>
           <img src={link}/>
         </div>
       );
@@ -128,9 +145,7 @@ var Game = React.createClass({
 
     var loaded = false;
     if(this.state.game.name) 
-      loaded = true; 
-    else 
-      loaded = false;
+      loaded = true;
 
     var title = this.state.game.name || "Game";
 
@@ -147,7 +162,10 @@ var Game = React.createClass({
                 <div className="game-info">
                   <div className="game-title">{this.state.game.name}</div>
                   <div className="game-description">{this.state.game.description}</div>
-               </div>
+                </div>
+                <div className="game-poster">
+                  Posted by <img src={this.state.game.posterAvatar}/> {this.state.game.posterUsername}
+                </div>
               </div>
               <div className="game-all-info">
                 <Loading loaded={loaded}>
@@ -189,7 +207,15 @@ var Game = React.createClass({
 
                     <div className="game-section game-screenshots">
                       <div className="game-section-header">media</div>
-                      {images}
+                      <div className="game-view-screenshot pure-u-24-24">
+                        <Loading loaded={this.state.imageLoaded}>
+                          <div></div>
+                        </Loading>
+                        <img onLoad={this.imageLoaded} src={this.state.game.images[this.state.selectedImage]}/>
+                      </div>
+                      <div className="game-list-screenshots">
+                        {images}
+                      </div>
                     </div>
 
                     <div className="game-section">

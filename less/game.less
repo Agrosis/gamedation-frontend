@@ -25,7 +25,10 @@
 
 .game {
   width: 100%;
-  min-height: 100%;
+  max-height: 100%;
+  height: 100%;
+
+  position: relative;
 }
 
 .game-content {
@@ -34,19 +37,20 @@
   outline: 0;
 
   max-width: 950px;
+  max-height: 93%;
   margin: 0 auto;
-
+  
   position: absolute;
+  bottom: 0px;
   left: 0px;
   right: 0px;
-  bottom: 0px;
 
   animation: move-game 0.25s ease-in-out;
+  overflow-y: scroll;
 }
 
-div.game-all-info {
-  height: 680px;
-  overflow-y: scroll;
+div.game-all-info > div {
+  background: #fff;
 }
 
 @keyframes move-game {
@@ -68,6 +72,7 @@ div.game-info {
 div.game-header {
   background: #333;
   padding: 16px 16px;
+  position: relative;
 }
 
 div.game-title {
@@ -75,6 +80,24 @@ div.game-title {
   font-size: 30px;
 
   color: #fafafa;
+  display: inline-block;
+}
+
+div.game-poster {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+
+  font-family: ProximaNovaA-Regular, sans-serif;
+  font-size: 14px;
+  color: #fff;
+
+  img {
+    width: 24px;
+    height: 24px;
+    border-radius: 100%;
+    vertical-align: middle;
+  }
 }
 
 div.game-description {
@@ -224,6 +247,24 @@ div.game-vote {
 }
 
 .game-screenshots {
+  padding: 18px 0;
+
+  .game-section-header, .game-list-screenshots {
+    padding-left: 18px;
+  }
+}
+
+.game-view-screenshot {
+  text-align: center;
+  background: #333;
+
+  margin: 2px 0;
+  padding: 12px 0;
+}
+
+.game-view-screenshot > img {
+  max-width: 100%;
+  max-height: 350px;
 }
 
 .game-screenshot {
@@ -237,4 +278,9 @@ div.game-vote {
 .game-screenshot > img {
   height: 80px;
   border-radius: 2px;
+  border: 3px solid rgba(0, 0, 0, 0);
+}
+
+.game-active-screenshot > img {
+  border: 3px solid #FF3E96;
 }
