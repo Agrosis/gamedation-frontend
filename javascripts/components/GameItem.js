@@ -4,7 +4,6 @@ var classSet = require('react-classset');
 
 var Router = require('react-router');
 var Navigation = Router.Navigation;
-var RouteHandler = Router.RouteHandler;
 
 var If = require('./helpers/If');
 

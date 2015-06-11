@@ -2,12 +2,12 @@
 var axios = require('axios');
 
 var processLink = (link, callback) => {
-  axios.get('http://localhost:8000/api/link?url=' + encodeURIComponent(link), {headers: {'Authorization': localStorage.getItem("token")}})
+  axios.get(window.serverUrl + '/api/link?url=' + encodeURIComponent(link), {headers: {'Authorization': localStorage.getItem("token")}})
        .then((response) => {
-          callback(response.data, null);
+          callback(response.data);
        })
        .then((error) => {
-          callback(null, error);
+          if(error) console.error(error);
        })
 }
 

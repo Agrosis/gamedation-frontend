@@ -21,6 +21,7 @@ app.rehydrate(dehydratedState);
 
 var dispatcher = app;
 window.dispatcher = dispatcher;
+window.serverUrl = require('server');
 
 getUser(window.dispatcher, () => {
   Router.run(Routes, Router.HistoryLocation, function (Handler, state) {

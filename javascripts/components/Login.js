@@ -24,11 +24,13 @@ var Login = React.createClass({
   },
 
   login: function(e) {
-    logIn({email: this.state.email, password: this.state.password}, window.dispatcher, (data) => {
-      this.props.onClose();
+    if(this.state.email != "" && this.state.password != "") {
+      logIn({email: this.state.email, password: this.state.password}, window.dispatcher, (data) => {
+        this.props.onClose();
 
-      getGames(window.dispatcher);
-    });
+        getGames(window.dispatcher);
+      });
+    } 
   },
 
   render: function(){

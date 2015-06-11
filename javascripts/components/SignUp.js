@@ -16,21 +16,40 @@ var SignUp = React.createClass({
   },
 
   emailChange: function(e) {
-    this.setState({email: e.target.value, emailState: "success"});
+    var email = e.target.value;
+    if(email != "" && email.length <= 128 && /^.+\@.+\..+$/.test(email)) {
+      this.setState({email: email, emailState: "success"});
+    } else {
+      this.setState({email: email, emailState: "error"});
+    }
   },
 
   usernameChange: function(e) {
-    this.setState({username: e.target.value, usernameState: "success"});
+    var username = e.target.value;
+    if(username != "" && username.length <= 20 && /^[A-Za-z0-9-_.]+$/.test(username)) {
+      this.setState({username: username, usernameState: "success"});
+    } else {
+      this.setState({username: username, usernameState: "error"});
+    }
   },
 
   passwordChange: function(e) {
-    this.setState({password: e.target.value, passwordState: "success"});
+    var password = e.target.value;
+    if(password.length >= 8 && password.length <= 128) {
+      this.setState({password: password, passwordState: "success"});
+    } else {
+      this.setState({password: password, passwordState: "error"});
+    }
   },
 
   onSignUp: function(e) {
-    signUp({email: this.state.email, username: this.state.username, password: this.state.password}, window.dispatcher, (data) => {
-      this.props.onClose();
-    });
+    if(this.state.emailState == "success" && this.state.usernameState == "success" && this.state.passwordState == "success") {
+      signUp({email: this.state.email, username: this.state.username, password: this.state.password}, window.dispatcher, (data) => {
+        if(!data.error) {
+          this.props.onClose();
+        }
+      });
+    }
   },
 
   render: function(){

@@ -66,12 +66,14 @@ var Game = React.createClass({
 
   submitComment: function(e){
     this.setState({commenting: true});
-    if(this.state.commentText != "") {
+    if(this.state.commentText != "" && this.state.commentText.length <= 300) {
       postComment({text: this.state.commentText}, this.state.game.id, "", window.dispatcher, (data) => {
         if(data.status == 200) {
           this.setState({commentText: "", commenting: false});
         }
       });
+    } else {
+      this.setState({commenting: false});
     }
   },
 
@@ -198,15 +200,23 @@ var Game = React.createClass({
                     <div className="game-section">
                       <div className="game-section-header">comments</div>
 
-                      <div className="game-comment">
-                        <div className="game-comment-avatar">
-                          <img src="https://secure.gravatar.com/avatar/802540db8043503a3c3ead05d51c0139?s=64"/>
+                      <If test={user != "guest"}>
+                        <div className="game-comment">
+                          <div className="game-comment-avatar">
+                            <img src={user.avatar}/>
+                          </div>
+                          <div className="game-comment-content">
+                            <textarea onChange={this.commentChange} placeholder="Enter your thoughts here..." value={this.state.commentText}></textarea>
+                            <button onClick={this.submitComment} className="button-full button-green">Post comment</button>
+                          </div>
                         </div>
-                        <div className="game-comment-content">
-                          <textarea onChange={this.commentChange} placeholder="Enter your thoughts here..." value={this.state.commentText}></textarea>
-                          <button onClick={this.submitComment} className="button-full button-green">Post comment</button>
+                      </If>
+
+                      <If test={user == "guest"}>
+                        <div className="need-to-sign-in">
+                          You need to be signed in to comment.
                         </div>
-                      </div>
+                      </If>
 
                       <Loading loaded={!this.state.commenting}>
                         <div></div>

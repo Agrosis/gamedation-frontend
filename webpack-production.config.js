@@ -1,18 +1,11 @@
 module.exports = {
     entry: {
-        app: ['webpack/hot/dev-server', './javascripts/entry.js'],
+        app: ['./javascripts/entry.js'],
     },
 
     output: {
-        path: './public/built',
-        publicPath: '/built/',
+        path: './public',
         filename: 'bundle.js'
-    },
-
-    devServer: {
-        contentBase: "public",
-        publicPath: 'http://localhost:8080/built/',
-        historyApiFallback: true
     },
 
     module: {
@@ -24,7 +17,7 @@ module.exports = {
 
     resolve: {
         alias: {
-            'server': '../servers/local.js'
+            'server': '../servers/remote.js'
         }
     }
 };

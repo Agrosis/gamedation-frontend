@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "./node_modules/.bin/webpack-dev-server --hot --config webpack-dev.config.js",
-    "test": "mocha --compilers js:babel/register"
+    "test": "mocha --compilers js:babel/register",
+    "package": "webpack -p --config webpack-production.config.js",
+    "deploy": "cp ./public/bundle.js /srv/gamedation/"
   },
   "author": "",
   "license": "ISC",

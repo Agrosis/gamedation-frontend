@@ -2,7 +2,7 @@
 var axios = require('axios');
 
 var addCurator = (username, callback) => {
-  axios.put('http://localhost:8000/api/admin/curator/' + username, {}, {headers: {'Authorization': localStorage.getItem("token")}})
+  axios.put(window.serverUrl + '/api/admin/curator/' + username, {}, {headers: {'Authorization': localStorage.getItem("token")}})
        .then((response) => {
           callback(response.data);
        })

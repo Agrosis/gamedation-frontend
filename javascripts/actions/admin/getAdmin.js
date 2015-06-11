@@ -2,7 +2,7 @@
 var axios = require('axios');
 
 var getAdmin = (callback) => {
-  axios.get('http://localhost:8000/api/admin/data', {headers: {'Authorization': localStorage.getItem("token")}})
+  axios.get(window.serverUrl + '/api/admin/data', {headers: {'Authorization': localStorage.getItem("token")}})
        .then((response) => {
           callback(response.data)
        })
