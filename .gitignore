@@ -2,3 +2,4 @@ node_modules/
 public/built/
 *.swp
 bower_components/
+public/bundle.js

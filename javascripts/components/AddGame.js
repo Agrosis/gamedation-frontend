@@ -156,7 +156,7 @@ var AddGame = React.createClass({
   },
 
   addImage: function() {
-    if(this.state.currentImage != "" && this.images.length < 6) {
+    if(this.state.currentImage != "" && this.state.images.length < 6) {
       this.setState({imageState: "success", images: this.state.images.concat([this.state.currentImage]), currentImage: ""});
     }
   },
