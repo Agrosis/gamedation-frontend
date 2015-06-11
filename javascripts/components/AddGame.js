@@ -23,6 +23,10 @@ var AddGame = React.createClass({
       nameState: "none", 
       descriptionState: "none", 
 
+      linkError: "",
+      nameError: "",
+      descriptionError: "",
+
       link: "",
       name: "",
       description: "",
@@ -50,7 +54,7 @@ var AddGame = React.createClass({
   onLinkChange: function(e) {
     var link = e.target.value;
     if(link != "") {
-      this.setState({linkState: "loading", nameState: "loading", descriptionState: "loading", link: link});
+      this.setState({linkState: "loading", nameState: "loading", link: link});
 
       processLink(link, (response) => {
         if(response.error) {
@@ -88,10 +92,19 @@ var AddGame = React.createClass({
               }
             });
           } else if(response.data.type == "other") {
-            this.setState({
-              linkState: "success",
-              nameState: "none"
-            })
+            if(!this.state.link.startsWith("http") || !this.state.link.startsWith("https")) {
+              this.setState({
+                linkState: "error",
+                linkError: "Invalid link.",
+                nameState: "none"
+              })
+            } else {
+              this.setState({
+                linkState: "success",
+                linkError: "",
+                nameState: "none"
+              })
+            }
           }
 
           if(this.state.images.length > 6) {
@@ -100,25 +113,25 @@ var AddGame = React.createClass({
         }
       });
     } else {
-      this.setState({linkState: "none"});
+      this.setState({linkState: "none", linkError: ""});
     }
   },
 
   onNameChange: function(e){
     var name = e.target.value;
-    if(name != "" && name.length <= 48) {
-      this.setState({nameState: "success", name: name});
+    if(name.length == 0 || name.length > 48) {
+      this.setState({nameState: "error", name: name, nameError: "Must contain 0 to 48 characters."});
     } else {
-      this.setState({nameState: "none", name: name});
+      this.setState({nameState: "success", name: name, nameError: ""});
     }
   },
 
   onDescriptionChange: function(e) {
     var description = e.target.value;
-    if(description != "" && description.length <= 100) {
-      this.setState({descriptionState: "success", description: description});
+    if(description.length == 0 || description.length > 100) {
+      this.setState({descriptionState: "success", description: description, descriptionError: "Must contain 0 to 100 characters."});
     } else {
-      this.setState({descriptionState: "none", description});
+      this.setState({descriptionState: "none", description: description, descriptionError: ""});
     }
   },
 
@@ -235,12 +248,31 @@ var AddGame = React.createClass({
 
                       <Loading loaded={!this.state.loading}>
                         <div>
+                          <If test={this.state.linkError != ""}>
+                            <div>
+                              <div className="pure-u-4-24"></div>
+                              <div className="pure-u-20-24"><div className="text-error">{this.state.linkError}</div></div>
+                            </div>
+                          </If>
                           <label className="pure-u-4-24">Game Link</label>
                           <Textbox name="link" onChange={this.onLinkChange} status={this.state.linkState} containerClasses="pure-u-20-24" placeholder="Paste game link here (e.g. GameJolt, Steam)"/>
 
+                          <If test={this.state.nameError != ""}>
+                            <div>
+                              <div className="pure-u-4-24"></div>
+                              <div className="pure-u-20-24"><div className="text-error">{this.state.nameError}</div></div>
+                            </div>
+                          </If>
                           <label className="pure-u-4-24">Name</label>
                           <Textbox name="name" onChange={this.onNameChange} status={this.state.nameState} value={this.state.name} containerClasses="pure-u-20-24" placeholder="Enter game name"/>
 
+
+                          <If test={this.state.descriptionError != ""}>
+                            <div>
+                              <div className="pure-u-4-24"></div>
+                              <div className="pure-u-20-24"><div className="text-error">{this.state.descriptionError}</div></div>
+                            </div>
+                          </If>
                           <label className="pure-u-4-24">Description</label>
                           <Textbox name="description" onChange={this.onDescriptionChange} status={this.state.descriptionState} containerClasses="pure-u-20-24" placeholder="Enter game description"/>
 

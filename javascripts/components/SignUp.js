@@ -12,33 +12,49 @@ var SignUp = React.createClass({
   },
 
   getInitialState: function(){
-    return {email: "", username: "", password: "", emailState: "none", usernameState: "none", passwordState: ""};
+    return {
+      email: "", 
+      username: "", 
+      password: "", 
+      
+      emailState: "none", 
+      usernameState: "none", 
+      passwordState: "", 
+
+      usernameError: "",
+      passwordError: "",
+      emailError: ""
+    };
   },
 
   emailChange: function(e) {
     var email = e.target.value;
-    if(email != "" && email.length <= 128 && /^.+\@.+\..+$/.test(email)) {
-      this.setState({email: email, emailState: "success"});
+    if(email.length < 5 || email.length > 128) {
+      this.setState({email: email, emailState: "error", emailError: "Must be between 5 and 128 characters."});
+    } else if(!/^.+\@.+\..+$/.test(email)) {
+      this.setState({email: email, emailState: "error", emailError: "Invalid email."});
     } else {
-      this.setState({email: email, emailState: "error"});
+      this.setState({email: email, emailState: "success", emailError: ""});
     }
   },
 
   usernameChange: function(e) {
     var username = e.target.value;
-    if(username != "" && username.length <= 20 && /^[A-Za-z0-9-_.]+$/.test(username)) {
-      this.setState({username: username, usernameState: "success"});
+    if(username.length == 0 || username.length > 20) {
+      this.setState({username: username, usernameState: "error", usernameError: "Must have between 0 and 20 characters."});
+    } else if(!/^[A-Za-z0-9-_.]+$/.test(username)) {
+      this.setState({username: username, usernameState: "error", usernameError: "Can only contain: A-Za-z0-9-_."});
     } else {
-      this.setState({username: username, usernameState: "error"});
+      this.setState({username: username, usernameState: "success", usernameError: ""});
     }
   },
 
   passwordChange: function(e) {
     var password = e.target.value;
-    if(password.length >= 8 && password.length <= 128) {
-      this.setState({password: password, passwordState: "success"});
+    if(password.length < 8 || password.length > 128) {
+      this.setState({password: password, passwordState: "error", passwordError: "Must have between 8 and 128 characters."});
     } else {
-      this.setState({password: password, passwordState: "error"});
+      this.setState({password: password, passwordState: "success", passwordError: ""});
     }
   },
 
@@ -60,11 +76,14 @@ var SignUp = React.createClass({
             <div className="modal-content pure-u-7-24" onClick={this.modalClick}>
               <div className="modal-header modal-header-small">Sign up</div>
 
-              <Textbox status={this.state.emailState} onChange={this.emailChange} containerClasses="pure-u-24-24" placeholder="Enter your email"/>
+              <div className="text-error">{this.state.emailError}</div>
+              <Textbox error={this.state.emailError} status={this.state.emailState} onChange={this.emailChange} containerClasses="pure-u-24-24" placeholder="Enter your email"/>
 
-              <Textbox status={this.state.usernameState} onChange={this.usernameChange} containerClasses="pure-u-24-24" placeholder="Enter your username"/>
-
-              <Textbox status={this.state.passwordState} onChange={this.passwordChange} type="password"containerClasses="pure-u-24-24" placeholder="Enter your password"/>
+              <div className="text-error">{this.state.usernameError}</div>
+              <Textbox error={this.state.usernameError} status={this.state.usernameState} onChange={this.usernameChange} containerClasses="pure-u-24-24" placeholder="Enter your username"/>
+              
+              <div className="text-error">{this.state.passwordError}</div>
+              <Textbox error={this.state.passwordError} status={this.state.passwordState} onChange={this.passwordChange} type="password"containerClasses="pure-u-24-24" placeholder="Enter your password"/>
 
               <div className="modal-submit-button">
                 <button onClick={this.onSignUp} className="button-black button-full">Sign up</button>
