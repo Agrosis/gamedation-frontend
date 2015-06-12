@@ -47,7 +47,7 @@ var Index = React.createClass({
           <div className="middle-content">
             <GameList games={this.state.games[0]} name="today's games"/>
             <GameList games={this.state.games[1]} name="yesterday's games"/>
-            <GameList games={this.state.games[2]} name={"games of " + d}/>
+            <GameList games={this.state.games[2]} name={d + " games"}/>
           </div>
 
           <DocumentTitle title='Gamedation'>

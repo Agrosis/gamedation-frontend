@@ -41,9 +41,9 @@ var Login = React.createClass({
             <div className="modal-content pure-u-7-24" onClick={this.modalClick}>
               <div className="modal-header modal-header-small">Log in</div>
 
-              <Textbox onChange={this.emailChange} status="none" containerClasses="pure-u-24-24" placeholder="Enter your email"/>
+              <Textbox onChange={this.emailChange} status="none" name="username" containerClasses="pure-u-24-24" placeholder="Enter your email"/>
 
-              <Textbox onChange={this.passwordChange} status="none" type="password" containerClasses="pure-u-24-24" placeholder="Enter your password"/>
+              <Textbox onChange={this.passwordChange} status="none" name="password" type="password" containerClasses="pure-u-24-24" placeholder="Enter your password"/>
 
               <div className="modal-submit-button">
                 <button onClick={this.login} className="button-black button-full">Log in</button>

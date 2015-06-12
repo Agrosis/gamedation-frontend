@@ -63,6 +63,7 @@ var AddGame = React.createClass({
           if(response.data.type == "gamejolt") {
             this.setState({
               linkState: "success",
+              linkError: "",
               name: response.data.gjData.data.name,
               windows: response.data.gjData.data.windows,
               mac: response.data.gjData.data.mac,
@@ -79,6 +80,7 @@ var AddGame = React.createClass({
           } else if(response.data.type == "steam") {
             this.setState({
               linkState: "success",
+              linkError: "",
               name: response.data.steamData.data.name,
               windows: response.data.steamData.data.windows,
               mac: response.data.steamData.data.mac,
