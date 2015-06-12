@@ -18,6 +18,7 @@ var getGame = require('../actions/getGame');
 var upvoteGame = require('../actions/upvoteGame');
 var gameName = require('../actions/gameName');
 var postComment = require('../actions/postComment');
+var clearGame = require('../actions/clearGame');
 
 var If = require('./helpers/If');
 var Loading = require('./helpers/Loading');
@@ -31,6 +32,7 @@ var Game = React.createClass({
   },
 
   onClose: function(e) {
+    clearGame(window.dispatcher);
     if(this.isActive('index')) {
       this.transitionTo('index');
     } else if(this.isActive('submissions')) {

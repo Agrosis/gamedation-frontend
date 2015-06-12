@@ -47,6 +47,22 @@ var GameStore = createStore({
       this.emitChange();
     },
 
+    'clear-game': function(payload) {
+      this.game = {
+        platforms: {
+          windows: false,
+          mac: false,
+          linux: false,
+          browser: false,
+          iOS: false,
+          android: false
+        },
+        images: []
+      };
+      this.upvoters = [];
+      this.comments = [];
+    },
+
     'upvote-game': function(payload) {
       if(payload.onPage) {
         if(this.game.upvoted) {

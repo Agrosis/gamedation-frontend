@@ -129,9 +129,9 @@ var AddGame = React.createClass({
   onDescriptionChange: function(e) {
     var description = e.target.value;
     if(description.length == 0 || description.length > 100) {
-      this.setState({descriptionState: "success", description: description, descriptionError: "Must contain 0 to 100 characters."});
+      this.setState({descriptionState: "error", description: description, descriptionError: "Must contain 0 to 100 characters."});
     } else {
-      this.setState({descriptionState: "none", description: description, descriptionError: ""});
+      this.setState({descriptionState: "success", description: description, descriptionError: ""});
     }
   },
 

@@ -42,7 +42,7 @@ body {
 }
 
 .game-items-day {
-  padding: 15px 0;
+  padding: 15px 0px;
 
   color: #555;
   text-align: center;
@@ -52,6 +52,12 @@ body {
   font-weight: 600;  
   letter-spacing: 0.85px;
   text-transform: uppercase;
+}
+
+@-moz-document url-prefix() {
+    .game-items-day {
+      padding: 0px 0px;
+    }
 }
 
 .upload-screenshot {
